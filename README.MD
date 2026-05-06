@@ -26,7 +26,7 @@
 
 #### Sample Output
 
-![Sample Invoice](dataset/sample_invoice.png)
+![Sample Invoice](sample_invoice_1.jpg)
 
 ---
 
