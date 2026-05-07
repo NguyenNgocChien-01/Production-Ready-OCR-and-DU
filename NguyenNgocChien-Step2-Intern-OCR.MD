@@ -2,7 +2,24 @@
 
 # Step 2: Define Supported Documents & Extraction Schemas
 
-## Overview
+---
+
+# Overview
+
+This document defines all supported document types and standardized extraction schemas used in the OCR and Document Understanding pipeline.
+
+The goal of these schemas is to create a scalable, production-ready OCR architecture that supports:
+- standardized API outputs
+- simplified backend validation
+- reliable frontend integration
+- document classification
+- structured data extraction
+- OCR quality consistency
+- easier future expansion
+
+All extracted outputs must follow a common response structure to ensure consistency across all document types.
+
+---
 
 # Table of Contents
 
@@ -20,45 +37,44 @@
 
 ---
 
-This section defines the supported document types and extraction schemas used in the OCR pipeline.
-
-The schemas are designed to:
-- standardize extracted outputs
-- simplify backend validation
-- support document classification
-- improve OCR consistency
-- reduce unnecessary complexity
-
----
-
 # 1. Parent Response Schema
 
 ## Purpose
 
-All OCR outputs must follow a common parent structure.
+All OCR outputs must follow a shared parent schema.
 
-This allows:
+This provides:
 - unified API responses
-- easier frontend integration
+- easier frontend rendering
 - centralized error handling
-- scalable multi-document support
+- scalable document support
+- easier monitoring and debugging
+- simplified downstream processing
 
-## Parent Schema
+The `data` field contains the extracted fields for the detected document type.
+
+---
+
+# Parent Response Schema
 
 ```json
 {
   "type": "object",
+  "title": "OCR Parent Response",
+  "description": "Standard response structure for all OCR document extraction outputs",
   "properties": {
     "status": {
       "type": "string",
       "enum": ["success", "partial", "failed", "unknown"],
       "title": "Processing Status",
+      "description": "Overall extraction status returned by the OCR pipeline",
       "required": true
     },
 
     "doc_type": {
       "type": "string",
       "title": "Document Type",
+      "description": "Detected document classification label",
       "required": true
     },
 
@@ -67,24 +83,28 @@ This allows:
       "minimum": 0.0,
       "maximum": 1.0,
       "title": "Classification Confidence",
+      "description": "Confidence score returned by the document classifier",
       "required": false
     },
 
     "message": {
       "type": "string",
-      "title": "Message",
+      "title": "Processing Message",
+      "description": "Optional informational message returned during processing",
       "required": false
     },
 
     "error": {
       "type": ["string", "null"],
       "title": "Error Detail",
+      "description": "Detailed error message when extraction fails",
       "required": false
     },
 
     "data": {
       "type": ["object", "null"],
       "title": "Extracted Data",
+      "description": "Structured extracted fields based on the detected document schema",
       "required": true
     }
   }
@@ -97,31 +117,41 @@ This allows:
 
 ## Purpose
 
-To keep all schemas consistent, every document should contain the same image field structure.
+To maintain consistency across all document schemas, every document must use the same image field structure.
 
-## Required Standard
+These fields store image references, uploaded image paths, cloud storage URLs, or base64 image data depending on system architecture.
+
+---
+
+# Standard Image Field Schema
 
 ```json
 {
   "document_front": {
     "type": "array",
     "title": "Document Front Photo",
-    "description": "Photo of the front side of the document",
-    "items": { "type": "string" },
+    "description": "Image list containing the front side of the document",
+    "items": {
+      "type": "string",
+      "description": "Image path, URL, or base64 string"
+    },
     "required": true
   },
 
   "document_back": {
     "type": "array",
     "title": "Document Back Photo",
-    "description": "Photo of the back side of the document",
-    "items": { "type": "string" },
+    "description": "Image list containing the back side of the document",
+    "items": {
+      "type": "string",
+      "description": "Image path, URL, or base64 string"
+    },
     "required": false
   }
 }
 ```
 
-
+---
 
 # 3. Supported Documents
 
@@ -131,97 +161,138 @@ To keep all schemas consistent, every document should contain the same image fie
 
 ## Description
 
-International government-issued travel document.
+A passport is an official government-issued international travel and identity document.
 
-## Important Fields
+Passports are commonly used for:
+- identity verification
+- international travel
+- visa applications
+- KYC verification
+- onboarding workflows
 
-- identity information
+The OCR system should prioritize high-confidence extraction of identity fields and MRZ information.
+
+---
+
+## Important Extraction Fields
+
+- first name
+- middle name
+- last name
 - passport number
 - nationality
-- MRZ lines
+- gender
+- date of birth
 - expiry date
+- place of birth
+- MRZ lines
 
-## Schema
+---
+
+## Passport Schema
 
 ```json
 {
   "title": "Passport",
+  "description": "Structured extraction schema for international passports",
   "type": "object",
   "properties": {
     "passport_first_name": {
       "type": "string",
       "title": "First Name",
+      "description": "Passport holder first name",
       "required": true
     },
 
     "passport_middle_name": {
       "type": ["string", "null"],
       "title": "Middle Name",
+      "description": "Passport holder middle name",
       "required": false
     },
 
     "passport_last_name": {
       "type": "string",
       "title": "Last Name",
+      "description": "Passport holder last name",
       "required": true
     },
 
     "passport_number": {
       "type": "string",
       "title": "Passport Number",
+      "description": "Unique passport identification number",
       "required": true
     },
 
     "passport_date_of_birth": {
       "type": "string",
       "format": "date",
+      "title": "Date of Birth",
+      "description": "Passport holder birth date",
       "required": true
     },
 
     "passport_expiry_date": {
       "type": "string",
       "format": "date",
+      "title": "Expiry Date",
+      "description": "Passport expiration date",
       "required": true
     },
 
     "passport_nationality": {
       "type": "string",
+      "title": "Nationality",
+      "description": "Country nationality shown on passport",
       "required": true
     },
 
     "passport_gender": {
       "type": "string",
+      "title": "Gender",
+      "description": "Gender shown on passport",
       "required": true
     },
 
     "passport_place_of_birth": {
       "type": "string",
+      "title": "Place of Birth",
+      "description": "Birth place shown on passport",
       "required": true
     },
 
     "passport_mrz_line1": {
       "type": ["string", "null"],
+      "title": "MRZ Line 1",
+      "description": "First machine-readable zone line",
       "required": false
     },
 
     "passport_mrz_line2": {
       "type": ["string", "null"],
+      "title": "MRZ Line 2",
+      "description": "Second machine-readable zone line",
       "required": false
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the passport front page",
-      "items": { "type": "string" },
+      "title": "Passport Front Image",
+      "description": "Image list containing the passport information page",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the passport back page",
-      "items": { "type": "string" },
+      "title": "Passport Back Image",
+      "description": "Optional additional passport images",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -234,79 +305,113 @@ International government-issued travel document.
 
 ## Description
 
-Official licence allowing a person to drive vehicles.
+An official government-issued licence allowing a person to legally operate vehicles.
 
-## Notes
+Driver licences are widely used for:
+- identity verification
+- age verification
+- onboarding systems
+- address verification
+- KYC workflows
 
-Optional fields with low OCR value can be removed:
-- licence conditions
-- card number
-- licence type
+Optional low-value OCR fields may be excluded during MVP implementation to simplify extraction complexity.
 
-These fields can be generated or handled later in backend systems.
+---
 
-## Schema
+## Important Extraction Fields
+
+- licence holder name
+- licence number
+- date of birth
+- expiry date
+- issuing state
+- residential address
+
+---
+
+## Driver Licence Schema
 
 ```json
 {
   "title": "Australian Driver Licence",
+  "description": "Structured extraction schema for Australian driver licences",
   "type": "object",
   "properties": {
     "driver_licence_first_name": {
       "type": "string",
+      "title": "First Name",
+      "description": "Driver first name",
       "required": true
     },
 
     "driver_licence_middle_name": {
       "type": ["string", "null"],
+      "title": "Middle Name",
+      "description": "Driver middle name",
       "required": false
     },
 
     "driver_licence_last_name": {
       "type": "string",
+      "title": "Last Name",
+      "description": "Driver last name",
       "required": true
     },
 
     "driver_licence_number": {
       "type": "string",
+      "title": "Licence Number",
+      "description": "Unique driver licence number",
       "required": true
     },
 
     "driver_licence_date_of_birth": {
       "type": "string",
       "format": "date",
+      "title": "Date of Birth",
+      "description": "Driver birth date",
       "required": true
     },
 
     "driver_licence_expiry_date": {
       "type": "string",
       "format": "date",
+      "title": "Expiry Date",
+      "description": "Licence expiration date",
       "required": true
     },
 
     "driver_licence_state": {
       "type": "string",
+      "title": "Issuing State",
+      "description": "Australian state or territory issuing the licence",
       "required": true
     },
 
     "driver_licence_address": {
       "type": ["string", "null"],
+      "title": "Residential Address",
+      "description": "Residential address shown on licence",
       "required": false
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the front of the driver's licence",
-      "items": { "type": "string" },
+      "title": "Licence Front Image",
+      "description": "Front side image of the driver licence",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the back of the driver's licence",
-      "items": { "type": "string" },
+      "title": "Licence Back Image",
+      "description": "Back side image of the driver licence",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -319,58 +424,86 @@ These fields can be generated or handled later in backend systems.
 
 ## Description
 
-Australian healthcare identification card.
+An Australian healthcare identification card used for accessing Medicare services.
 
-## Notes
+Medicare cards are commonly used for:
+- healthcare verification
+- identity validation
+- government service onboarding
 
-Non-essential fields may be removed:
-- card colour
+Non-essential appearance-related fields can be removed to reduce OCR complexity.
 
-## Schema
+---
+
+## Important Extraction Fields
+
+- card number
+- holder name
+- expiry date
+- individual reference position
+
+---
+
+## Medicare Card Schema
 
 ```json
 {
   "title": "Medicare Card",
+  "description": "Structured extraction schema for Australian Medicare cards",
   "type": "object",
   "properties": {
     "medicare_card_number": {
       "type": "string",
+      "title": "Card Number",
+      "description": "Unique Medicare card number",
       "required": true
     },
 
     "medicare_card_first_name": {
       "type": "string",
+      "title": "First Name",
+      "description": "Card holder first name",
       "required": true
     },
 
     "medicare_card_last_name": {
       "type": "string",
+      "title": "Last Name",
+      "description": "Card holder last name",
       "required": true
     },
 
     "medicare_card_expiry_date": {
       "type": "string",
+      "title": "Expiry Date",
+      "description": "Medicare card expiration date",
       "required": true
     },
 
     "medicare_card_position": {
       "type": "string",
+      "title": "Reference Position",
+      "description": "Individual reference number position on the card",
       "required": true
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the Medicare card front side",
-      "items": { "type": "string" },
+      "title": "Medicare Front Image",
+      "description": "Front side image of the Medicare card",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the Medicare card back side",
-      "items": { "type": "string" },
+      "title": "Medicare Back Image",
+      "description": "Back side image of the Medicare card",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -383,53 +516,85 @@ Non-essential fields may be removed:
 
 ## Description
 
-Background-check clearance card.
+A Working With Children (WWC) card is a government-issued background-check clearance document.
 
-## Schema
+It is commonly required for:
+- education roles
+- childcare positions
+- volunteer programs
+- regulated employment
+
+---
+
+## Important Extraction Fields
+
+- holder name
+- WWC card number
+- expiry date
+- issuing state
+
+---
+
+## WWC Schema
 
 ```json
 {
   "title": "Working With Children (WWC) Card",
+  "description": "Structured extraction schema for Working With Children clearance cards",
   "type": "object",
   "properties": {
     "wwc_first_name": {
       "type": "string",
+      "title": "First Name",
+      "description": "WWC card holder first name",
       "required": true
     },
 
     "wwc_last_name": {
       "type": "string",
+      "title": "Last Name",
+      "description": "WWC card holder last name",
       "required": true
     },
 
     "wwc_card_number": {
       "type": "string",
+      "title": "WWC Card Number",
+      "description": "Unique Working With Children card number",
       "required": true
     },
 
     "wwc_expiry_date": {
       "type": "string",
+      "title": "Expiry Date",
+      "description": "WWC card expiration date",
       "required": true
     },
 
     "wwc_state": {
       "type": "string",
+      "title": "Issuing State",
+      "description": "Australian state issuing the WWC card",
       "required": true
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the WWC card front side",
-      "items": { "type": "string" },
+      "title": "WWC Front Image",
+      "description": "Front side image of the WWC card",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the WWC card back side",
-      "items": { "type": "string" },
+      "title": "WWC Back Image",
+      "description": "Back side image of the WWC card",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -442,62 +607,95 @@ Background-check clearance card.
 
 ## Description
 
-English language proficiency certificate.
+An IELTS Test Report Form (TRF) is an official English proficiency certificate.
 
-## Notes
+It is commonly used for:
+- university applications
+- migration
+- employment verification
+- visa applications
 
-Detailed skill scores may be optional for MVP extraction.
+Detailed subsection scores may optionally be extracted in later versions.
 
-## Schema
+---
+
+## Important Extraction Fields
+
+- candidate name
+- TRF number
+- test date
+- test type
+- overall band score
+
+---
+
+## IELTS Schema
 
 ```json
 {
   "title": "IELTS Test Report Form",
+  "description": "Structured extraction schema for IELTS certificates",
   "type": "object",
   "properties": {
     "ielts_first_name": {
       "type": "string",
+      "title": "First Name",
+      "description": "Candidate first name",
       "required": true
     },
 
     "ielts_last_name": {
       "type": "string",
+      "title": "Last Name",
+      "description": "Candidate last name",
       "required": true
     },
 
     "ielts_test_date": {
       "type": "string",
+      "title": "Test Date",
+      "description": "IELTS examination date",
       "required": true
     },
 
     "ielts_trf_number": {
       "type": "string",
+      "title": "TRF Number",
+      "description": "Unique IELTS Test Report Form number",
       "required": true
     },
 
     "ielts_test_type": {
       "type": "string",
+      "title": "Test Type",
+      "description": "IELTS Academic or General Training",
       "required": true
     },
 
     "ielts_overall_band": {
       "type": "number",
+      "title": "Overall Band Score",
+      "description": "Overall IELTS band score",
       "required": true
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the IELTS certificate front side",
-      "items": { "type": "string" },
+      "title": "IELTS Front Image",
+      "description": "Front side image of the IELTS certificate",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the IELTS certificate back side",
-      "items": { "type": "string" },
+      "title": "IELTS Back Image",
+      "description": "Back side image of the IELTS certificate",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -510,62 +708,95 @@ Detailed skill scores may be optional for MVP extraction.
 
 ## Description
 
-Household electricity or gas bill.
+An energy bill is a utility document issued by an electricity or gas retailer.
 
-## Notes
+Energy bills are commonly used for:
+- proof of address
+- customer verification
+- utility account validation
 
-Highly detailed billing fields can be removed to simplify OCR extraction.
+Complex billing breakdowns may be omitted during MVP extraction.
 
-## Schema
+---
+
+## Important Extraction Fields
+
+- account holder
+- account number
+- retailer name
+- service address
+- due date
+- total amount due
+
+---
+
+## Energy Bill Schema
 
 ```json
 {
   "title": "Australian Household Energy Bill",
+  "description": "Structured extraction schema for Australian electricity and gas bills",
   "type": "object",
   "properties": {
     "energy_bill_account_holder_name": {
       "type": "string",
+      "title": "Account Holder Name",
+      "description": "Name of the account holder",
       "required": true
     },
 
     "energy_bill_account_number": {
       "type": "string",
+      "title": "Account Number",
+      "description": "Utility account number",
       "required": true
     },
 
     "energy_bill_retailer_name": {
       "type": "string",
+      "title": "Retailer Name",
+      "description": "Energy retailer or provider name",
       "required": true
     },
 
     "energy_bill_service_address": {
       "type": "string",
+      "title": "Service Address",
+      "description": "Property service address",
       "required": true
     },
 
     "energy_bill_due_date": {
       "type": "string",
+      "title": "Due Date",
+      "description": "Bill payment due date",
       "required": true
     },
 
     "energy_bill_total_amount_due": {
       "type": "number",
+      "title": "Total Amount Due",
+      "description": "Total payable amount on the bill",
       "required": true
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the energy bill front page",
-      "items": { "type": "string" },
+      "title": "Energy Bill Front Image",
+      "description": "Front page image of the energy bill",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of additional bill pages",
-      "items": { "type": "string" },
+      "title": "Energy Bill Additional Pages",
+      "description": "Additional bill pages or back-side images",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
@@ -578,52 +809,81 @@ Highly detailed billing fields can be removed to simplify OCR extraction.
 
 ## Description
 
-Fallback schema for unsupported or failed document classification.
+Fallback schema used when:
+- document classification fails
+- OCR confidence is too low
+- unsupported document types are uploaded
+- corrupted or unreadable files are detected
 
-## Schema
+This schema helps preserve raw OCR outputs for debugging and future model improvement.
+
+---
+
+## Important Extraction Fields
+
+- raw extracted text
+- failure reason
+- classifier top prediction
+- classifier confidence
+
+---
+
+## Unknown Document Schema
 
 ```json
 {
   "title": "Unknown Document",
+  "description": "Fallback schema for unsupported or failed document classification",
   "type": "object",
   "properties": {
     "unknown_raw_text": {
       "type": ["string", "null"],
+      "title": "Raw OCR Text",
+      "description": "Raw text extracted from the document",
       "required": true
     },
 
     "unknown_reason": {
       "type": "string",
+      "title": "Unknown Reason",
+      "description": "Reason why the document could not be classified or processed",
       "required": true
     },
 
     "unknown_classifier_top_guess": {
       "type": ["string", "null"],
+      "title": "Classifier Top Guess",
+      "description": "Best predicted document type returned by classifier",
       "required": false
     },
 
     "unknown_classifier_confidence": {
       "type": ["number", "null"],
+      "title": "Classifier Confidence",
+      "description": "Confidence score of the classifier prediction",
       "required": false
     },
 
     "document_front": {
       "type": "array",
-      "title": "Document Front Photo",
-      "description": "Photo of the unknown document front side",
-      "items": { "type": "string" },
+      "title": "Unknown Document Front Image",
+      "description": "Front side image of the uploaded document",
+      "items": {
+        "type": "string"
+      },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Document Back Photo",
-      "description": "Photo of the unknown document back side",
-      "items": { "type": "string" },
+      "title": "Unknown Document Back Image",
+      "description": "Back side image of the uploaded document",
+      "items": {
+        "type": "string"
+      },
       "required": false
     }
   }
 }
 ```
 
----
