@@ -1,6 +1,6 @@
 # Production-Ready OCR & Document Understanding Mastery Challenge
 
-## Summary
+## Abtracts
 
 ### Step 1: Environment Setup & OCR Fundamentals
 - OCR: Image/PDF to text (Tesseract OCR, PaddleOCR…)
