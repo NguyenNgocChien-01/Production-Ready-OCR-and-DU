@@ -121,24 +121,7 @@ To keep all schemas consistent, every document should contain the same image fie
 }
 ```
 
-## Notes
 
-Previous field names such as:
-- commencement_document_front
-- secondary_document_front
-- unknown_document_front
-
-should be standardized into:
-- document_front
-- document_back
-
-Benefits:
-- reusable frontend upload components
-- simpler backend validation
-- cleaner dataset structure
-- easier maintenance
-
----
 
 # 3. Supported Documents
 
