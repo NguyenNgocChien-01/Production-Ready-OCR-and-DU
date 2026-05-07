@@ -10,8 +10,8 @@
 
 ---
 
-### Step 2: Schema Design
-- Design JSON schema for each document type
+### Step 2: Schema Design 
+- Design JSON schema for each document type [Step3](NguyenNgocChien-Step2-Intern-OCR.MD)
 
 ---
 
