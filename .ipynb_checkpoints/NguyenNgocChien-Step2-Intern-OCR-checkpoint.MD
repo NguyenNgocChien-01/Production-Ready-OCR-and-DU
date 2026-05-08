@@ -189,6 +189,9 @@ The OCR system should prioritize high-confidence extraction of identity fields a
 
 ---
 
+
+![Passport](img/passport.jpg)
+
 ## Passport Schema
 
 ```json
@@ -329,12 +332,14 @@ Optional low-value OCR fields may be excluded during MVP implementation to simpl
 
 ---
 
+![Driver](img/driver-licence.jpg)
+
 ## Driver Licence Schema
 
 ```json
 {
-  "title": "Australian Driver Licence",
-  "description": "Structured extraction schema for Australian driver licences",
+  "title": "Driver Licence",
+  "description": "Structured extraction schema for driver licences",
   "type": "object",
   "properties": {
     "driver_licence_first_name": {
@@ -444,12 +449,15 @@ Non-essential appearance-related fields can be removed to reduce OCR complexity.
 
 ---
 
+![Medicare](img/medicare.jpg)
+
+
 ## Medicare Card Schema
 
 ```json
 {
   "title": "Medicare Card",
-  "description": "Structured extraction schema for Australian Medicare cards",
+  "description": "Structured extraction schema for Medicare cards",
   "type": "object",
   "properties": {
     "medicare_card_number": {
@@ -535,6 +543,9 @@ It is commonly required for:
 
 ---
 
+![WWC](img/wwc.jpg)
+
+
 ## WWC Schema
 
 ```json
@@ -574,7 +585,7 @@ It is commonly required for:
     "wwc_state": {
       "type": "string",
       "title": "Issuing State",
-      "description": "Australian state issuing the WWC card",
+      "description": "State issuing the WWC card",
       "required": true
     },
 
@@ -620,42 +631,185 @@ Detailed subsection scores may optionally be extracted in later versions.
 ---
 
 ## Important Extraction Fields
-
-- candidate name
-- TRF number
-- test date
-- test type
-- overall band score
+- centre Number
+- candidate Number
+- candidate ID
+- name
+- date of Birth
+- nationality
+- first Language
+- individual skill scores
+- CEFR level
+- validation stamp
+- cheme code
+- report form number
 
 ---
 
+![ielts](img/ielts.png)
 ## IELTS Schema
 
 ```json
 {
   "title": "IELTS Test Report Form",
-  "description": "Structured extraction schema for IELTS certificates",
+  "description": "Production-ready extraction schema for IELTS certificates",
   "type": "object",
+
   "properties": {
-    "ielts_first_name": {
+
+    "ielts_candidate_first_name": {
       "type": "string",
-      "title": "First Name",
-      "description": "Candidate first name",
+      "title": "Candidate First Name",
+      "description": "Candidate given name(s)",
       "required": true
     },
 
-    "ielts_last_name": {
+    "ielts_candidate_last_name": {
       "type": "string",
-      "title": "Last Name",
-      "description": "Candidate last name",
+      "title": "Candidate Last Name",
+      "description": "Candidate family name",
       "required": true
+    },
+
+    "ielts_candidate_id": {
+      "type": ["string", "null"],
+      "title": "Candidate ID",
+      "description": "Candidate identification number shown on certificate",
+      "required": false
+    },
+
+    "ielts_candidate_number": {
+      "type": ["string", "null"],
+      "title": "Candidate Number",
+      "description": "Internal IELTS candidate number",
+      "required": false
+    },
+
+    "ielts_centre_number": {
+      "type": ["string", "null"],
+      "title": "Centre Number",
+      "description": "IELTS testing centre number",
+      "required": false
     },
 
     "ielts_test_date": {
       "type": "string",
+      "format": "date",
       "title": "Test Date",
-      "description": "IELTS examination date",
+      "description": "Official IELTS examination date",
       "required": true
+    },
+
+    "ielts_report_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "title": "Report Issue Date",
+      "description": "Date the report form was issued",
+      "required": false
+    },
+
+    "ielts_date_of_birth": {
+      "type": ["string", "null"],
+      "format": "date",
+      "title": "Date of Birth",
+      "description": "Candidate birth date",
+      "required": false
+    },
+
+    "ielts_gender": {
+      "type": ["string", "null"],
+      "enum": ["M", "F", "Other", null],
+      "title": "Gender",
+      "description": "Candidate gender",
+      "required": false
+    },
+
+    "ielts_country_of_nationality": {
+      "type": ["string", "null"],
+      "title": "Country of Nationality",
+      "description": "Candidate nationality",
+      "required": false
+    },
+
+    "ielts_first_language": {
+      "type": ["string", "null"],
+      "title": "First Language",
+      "description": "Candidate first language",
+      "required": false
+    },
+
+    "ielts_test_type": {
+      "type": "string",
+      "enum": [
+        "Academic",
+        "General Training",
+        "UKVI Academic",
+        "UKVI General Training",
+        "Life Skills",
+        "Unknown"
+      ],
+      "title": "Test Type",
+      "description": "IELTS examination type",
+      "required": true
+    },
+
+    "ielts_scheme_code": {
+      "type": ["string", "null"],
+      "title": "Scheme Code",
+      "description": "IELTS scheme or registration category",
+      "required": false
+    },
+
+    "ielts_listening_score": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 9,
+      "title": "Listening Score",
+      "description": "IELTS listening band score",
+      "required": false
+    },
+
+    "ielts_reading_score": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 9,
+      "title": "Reading Score",
+      "description": "IELTS reading band score",
+      "required": false
+    },
+
+    "ielts_writing_score": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 9,
+      "title": "Writing Score",
+      "description": "IELTS writing band score",
+      "required": false
+    },
+
+    "ielts_speaking_score": {
+      "type": ["number", "null"],
+      "minimum": 0,
+      "maximum": 9,
+      "title": "Speaking Score",
+      "description": "IELTS speaking band score",
+      "required": false
+    },
+
+    "ielts_overall_band_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 9,
+      "title": "Overall Band Score",
+      "description": "Overall IELTS band score",
+      "required": true
+    },
+
+    "ielts_cefr_level": {
+      "type": ["string", "null"],
+      "title": "CEFR Level",
+      "description": "Mapped CEFR proficiency level",
+      "required": false
     },
 
     "ielts_trf_number": {
@@ -665,24 +819,31 @@ Detailed subsection scores may optionally be extracted in later versions.
       "required": true
     },
 
-    "ielts_test_type": {
-      "type": "string",
-      "title": "Test Type",
-      "description": "IELTS Academic or General Training",
-      "required": true
+    "ielts_administrator_comments": {
+      "type": ["string", "null"],
+      "title": "Administrator Comments",
+      "description": "Optional comments section",
+      "required": false
     },
 
-    "ielts_overall_band": {
-      "type": "number",
-      "title": "Overall Band Score",
-      "description": "Overall IELTS band score",
-      "required": true
+    "ielts_has_validation_stamp": {
+      "type": ["boolean", "null"],
+      "title": "Validation Stamp Present",
+      "description": "Whether validation stamp exists",
+      "required": false
+    },
+
+    "ielts_candidate_photo_present": {
+      "type": ["boolean", "null"],
+      "title": "Candidate Photo Present",
+      "description": "Whether candidate photo is detected",
+      "required": false
     },
 
     "document_front": {
       "type": "array",
       "title": "IELTS Front Image",
-      "description": "Front side image of the IELTS certificate",
+      "description": "Front side image of IELTS certificate",
       "items": {
         "type": "string"
       },
@@ -692,7 +853,7 @@ Detailed subsection scores may optionally be extracted in later versions.
     "document_back": {
       "type": "array",
       "title": "IELTS Back Image",
-      "description": "Back side image of the IELTS certificate",
+      "description": "Back side image of IELTS certificate",
       "items": {
         "type": "string"
       },
@@ -729,6 +890,8 @@ Complex billing breakdowns may be omitted during MVP extraction.
 - total amount due
 
 ---
+
+![Bill](img/bill.png)
 
 ## Energy Bill Schema
 
