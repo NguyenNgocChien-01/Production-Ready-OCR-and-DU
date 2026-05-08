@@ -6,24 +6,15 @@
 
 # Overview
 
-This document defines all supported document types and standardized extraction schemas used in the OCR and Document Understanding pipeline.
-
-The goal of these schemas is to create a scalable, production-ready OCR architecture that supports:
-- standardized API outputs
-- simplified backend validation
-- reliable frontend integration
-- document classification
-- structured data extraction
-- OCR quality consistency
-- easier future expansion
-
-All extracted outputs must follow a common response structure to ensure consistency across all document types.
+Research/Learn: JSON schema design for each document type, handling
+variations (different states/countries, formats).
+Actions: Create formal JSON schemas for all supported documents.
+Milestone: Complete schema library + “unknown” fallback logic documented.
 
 ---
 
 # Table of Contents
 
-- [Overview](#overview)
 - [1. Parent Response Schema](#1-parent-response-schema)
 - [2. Standard Image Fields](#2-standard-image-fields)
 - [3. Supported Documents](#3-supported-documents)
@@ -429,7 +420,7 @@ Optional low-value OCR fields may be excluded during MVP implementation to simpl
 
 ## Description
 
-An Australian healthcare identification card used for accessing Medicare services.
+Healthcare identification card used for accessing Medicare services.
 
 Medicare cards are commonly used for:
 - healthcare verification
@@ -875,19 +866,89 @@ Energy bills are commonly used for:
 - proof of address
 - customer verification
 - utility account validation
+- billing verification
+- payment reconciliation
+- onboarding and KYC workflows
 
-Complex billing breakdowns may be omitted during MVP extraction.
+Australian energy bills may contain:
+- account information
+- service address
+- billing period
+- payment details
+- utility identifiers
+- usage summaries
+- tax information
+- barcode and BPAY references
+
+Different providers use different layouts and terminology, so OCR extraction should support flexible optional fields.
 
 ---
 
 ## Important Extraction Fields
 
-- account holder
+### Core Identity Fields
+
+- provider name
+- account holder name
 - account number
-- retailer name
+- service address
+
+### Billing Fields
+
+- issue date
+- due date
+- billing period
+- total amount due
+- account balance
+
+### Utility Identifiers
+
+- NMI
+- MIRN
+- meter number
+
+### Payment Fields
+
+- BPAY code
+- BPAY reference
+- payment reference
+- payment plan indicator
+
+### Consumption Fields
+
+- electricity usage (kWh)
+- gas usage (MJ)
+- supply charge
+- usage charge
+
+---
+
+## OCR Extraction Notes
+
+### Required Fields
+
+The following fields are considered high-priority and should normally be extracted:
+
+- provider name
+- account holder name
+- account number
 - service address
 - due date
 - total amount due
+
+### Optional Fields
+
+Many energy bill layouts vary significantly between providers.
+
+Optional fields may be:
+- missing
+- renamed
+- positioned differently
+- unavailable on some bill types
+
+Because of this:
+- non-critical fields should remain optional
+- OCR failures should not invalidate the entire extraction
 
 ---
 
@@ -897,74 +958,250 @@ Complex billing breakdowns may be omitted during MVP extraction.
 
 ```json
 {
-  "title": "Australian Household Energy Bill",
-  "description": "Structured extraction schema for Australian electricity and gas bills",
+  "title": "Energy Bill",
+  "description": "Production-ready extraction schema for electricity and gas utility bills",
   "type": "object",
+
   "properties": {
+
+    "energy_bill_provider_name": {
+      "type": "string",
+      "title": "Energy Provider Name",
+      "description": "Name of the electricity or gas retailer issuing the bill",
+      "required": true
+    },
+
+    "energy_bill_provider_bn": {
+      "type": ["string", "null"],
+      "title": "Provider BN",
+      "description": "Business Number of the energy provider",
+      "required": false
+    },
+
     "energy_bill_account_holder_name": {
       "type": "string",
       "title": "Account Holder Name",
-      "description": "Name of the account holder",
+      "description": "Full name of the primary account holder",
       "required": true
     },
 
     "energy_bill_account_number": {
       "type": "string",
       "title": "Account Number",
-      "description": "Utility account number",
+      "description": "Customer utility account number",
       "required": true
     },
 
-    "energy_bill_retailer_name": {
-      "type": "string",
-      "title": "Retailer Name",
-      "description": "Energy retailer or provider name",
-      "required": true
+    "energy_bill_invoice_number": {
+      "type": ["string", "null"],
+      "title": "Invoice Number",
+      "description": "Unique invoice or bill reference number",
+      "required": false
+    },
+
+    "energy_bill_nmi": {
+      "type": ["string", "null"],
+      "title": "National Metering Identifier (NMI)",
+      "description": "Unique electricity meter identifier used",
+      "required": false
+    },
+
+    "energy_bill_mirn": {
+      "type": ["string", "null"],
+      "title": "Meter Installation Registration Number (MIRN)",
+      "description": "Unique gas meter identifier used",
+      "required": false
+    },
+
+    "energy_bill_meter_number": {
+      "type": ["string", "null"],
+      "title": "Meter Number",
+      "description": "Physical utility meter serial number",
+      "required": false
     },
 
     "energy_bill_service_address": {
       "type": "string",
       "title": "Service Address",
-      "description": "Property service address",
+      "description": "Address where electricity or gas service is supplied",
       "required": true
+    },
+
+    "energy_bill_postal_address": {
+      "type": ["string", "null"],
+      "title": "Postal Address",
+      "description": "Mailing address used for bill delivery",
+      "required": false
+    },
+
+    "energy_bill_issue_date": {
+      "type": ["string", "null"],
+      "format": "date",
+      "title": "Bill Issue Date",
+      "description": "Date the utility bill was issued",
+      "required": false
     },
 
     "energy_bill_due_date": {
       "type": "string",
-      "title": "Due Date",
-      "description": "Bill payment due date",
+      "format": "date",
+      "title": "Payment Due Date",
+      "description": "Final payment due date for the bill",
       "required": true
+    },
+
+    "energy_bill_billing_period_start": {
+      "type": ["string", "null"],
+      "format": "date",
+      "title": "Billing Period Start Date",
+      "description": "Start date of the billing cycle",
+      "required": false
+    },
+
+    "energy_bill_billing_period_end": {
+      "type": ["string", "null"],
+      "format": "date",
+      "title": "Billing Period End Date",
+      "description": "End date of the billing cycle",
+      "required": false
     },
 
     "energy_bill_total_amount_due": {
       "type": "number",
       "title": "Total Amount Due",
-      "description": "Total payable amount on the bill",
+      "description": "Total payable amount shown on the bill",
       "required": true
+    },
+
+    "energy_bill_account_balance": {
+      "type": ["number", "null"],
+      "title": "Account Balance",
+      "description": "Current account balance displayed on the bill",
+      "required": false
+    },
+
+    "energy_bill_supply_charge": {
+      "type": ["number", "null"],
+      "title": "Supply Charge",
+      "description": "Fixed daily supply charge amount",
+      "required": false
+    },
+
+    "energy_bill_usage_charge": {
+      "type": ["number", "null"],
+      "title": "Usage Charge",
+      "description": "Variable charge based on energy consumption",
+      "required": false
+    },
+
+    "energy_bill_usage_kwh": {
+      "type": ["number", "null"],
+      "title": "Electricity Usage (kWh)",
+      "description": "Electricity usage measured in kilowatt-hours",
+      "required": false
+    },
+
+    "energy_bill_usage_mj": {
+      "type": ["number", "null"],
+      "title": "Gas Usage (MJ)",
+      "description": "Gas usage measured in megajoules",
+      "required": false
+    },
+
+    "energy_bill_tariff_type": {
+      "type": ["string", "null"],
+      "title": "Tariff Type",
+      "description": "Energy tariff or pricing plan type",
+      "required": false
+    },
+
+    "energy_bill_gst_amount": {
+      "type": ["number", "null"],
+      "title": "GST Amount",
+      "description": "Goods and Services Tax (GST) amount included in the bill",
+      "required": false
+    },
+
+    "energy_bill_bpay_code": {
+      "type": ["string", "null"],
+      "title": "BPAY Biller Code",
+      "description": "BPAY biller code used for payments",
+      "required": false
+    },
+
+    "energy_bill_bpay_reference": {
+      "type": ["string", "null"],
+      "title": "BPAY Reference Number",
+      "description": "Customer BPAY payment reference number",
+      "required": false
+    },
+
+    "energy_bill_payment_reference": {
+      "type": ["string", "null"],
+      "title": "Payment Reference",
+      "description": "Reference number used for payment processing",
+      "required": false
+    },
+
+    "energy_bill_payment_plan": {
+      "type": ["boolean", "null"],
+      "title": "Payment Plan Indicator",
+      "description": "Whether the customer is enrolled in a payment plan",
+      "required": false
+    },
+
+    "energy_bill_concession_applied": {
+      "type": ["boolean", "null"],
+      "title": "Concession Applied",
+      "description": "Whether a government concession or discount has been applied",
+      "required": false
+    },
+
+    "energy_bill_document_type": {
+      "type": ["string", "null"],
+      "enum": [
+        "electricity",
+        "gas",
+        "combined",
+        null
+      ],
+      "title": "Energy Bill Type",
+      "description": "Type of utility bill document",
+      "required": false
+    },
+
+    "energy_bill_barcode_present": {
+      "type": ["boolean", "null"],
+      "title": "Barcode Present",
+      "description": "Whether a payment barcode is detected on the bill",
+      "required": false
     },
 
     "document_front": {
       "type": "array",
-      "title": "Energy Bill Front Image",
-      "description": "Front page image of the energy bill",
+      "title": "Energy Bill Front Images",
+      "description": "Front page images of the utility bill",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Image path, URL, or base64 encoded image"
       },
       "required": true
     },
 
     "document_back": {
       "type": "array",
-      "title": "Energy Bill Additional Pages",
-      "description": "Additional bill pages or back-side images",
+      "title": "Energy Bill Additional Images",
+      "description": "Additional pages or back-side images of the utility bill",
       "items": {
-        "type": "string"
+        "type": "string",
+        "description": "Image path, URL, or base64 encoded image"
       },
       "required": false
     }
   }
 }
 ```
+
 
 ---
 

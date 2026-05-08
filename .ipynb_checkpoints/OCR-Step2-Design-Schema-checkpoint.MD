@@ -6,24 +6,15 @@
 
 # Overview
 
-This document defines all supported document types and standardized extraction schemas used in the OCR and Document Understanding pipeline.
-
-The goal of these schemas is to create a scalable, production-ready OCR architecture that supports:
-- standardized API outputs
-- simplified backend validation
-- reliable frontend integration
-- document classification
-- structured data extraction
-- OCR quality consistency
-- easier future expansion
-
-All extracted outputs must follow a common response structure to ensure consistency across all document types.
+Research/Learn: JSON schema design for each document type, handling
+variations (different states/countries, formats).
+Actions: Create formal JSON schemas for all supported documents.
+Milestone: Complete schema library + “unknown” fallback logic documented.
 
 ---
 
 # Table of Contents
 
-- [Overview](#overview)
 - [1. Parent Response Schema](#1-parent-response-schema)
 - [2. Standard Image Fields](#2-standard-image-fields)
 - [3. Supported Documents](#3-supported-documents)
@@ -961,6 +952,8 @@ Because of this:
 
 ---
 
+![Bill](img/bill.png)
+
 ## Energy Bill Schema
 
 ```json
@@ -978,10 +971,10 @@ Because of this:
       "required": true
     },
 
-    "energy_bill_provider_abn": {
+    "energy_bill_provider_bn": {
       "type": ["string", "null"],
-      "title": "Provider ABN",
-      "description": "Business Number (ABN) of the energy provider",
+      "title": "Provider BN",
+      "description": "Business Number of the energy provider",
       "required": false
     },
 
