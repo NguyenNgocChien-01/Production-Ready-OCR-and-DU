@@ -26,7 +26,7 @@
   - engery bill
 
 ## Use Augraphy
-![Augraphy]{augmentation.png}
+![Augraphy](augmentation.png)
 <!-- #### Sample Output
 
 ![Sample Invoice](sample_invoice_1.jpg)
