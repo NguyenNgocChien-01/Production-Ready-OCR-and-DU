@@ -1,0 +1,17 @@
+{
+  "passport_first_name": "JOSHUA",
+  "passport_middle_name": null,
+  "passport_last_name": "MILLER",
+  "passport_number": "RY4621120",
+  "passport_date_of_birth": "1959-10-16",
+  "passport_expiry_date": "2030-09-15",
+  "passport_nationality": "AUSTRALIAN",
+  "passport_gender": "M",
+  "passport_place_of_birth": "TOWNSVILLE",
+  "passport_mrz_line1": "P<AUSMILLER<<JOSHUA<<<<<<<<<<<<<<<<<<<<<<<<<",
+  "passport_mrz_line2": "RY46211200AUS591016M3009150<<<<<<<<<<<<<<0",
+  "document_front": [
+    "output/passport/passport_0001.png"
+  ],
+  "document_back": []
+}

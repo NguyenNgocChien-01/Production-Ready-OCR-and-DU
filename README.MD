@@ -18,13 +18,15 @@
 ### Step 3: Synthetic Data Generation
 - Use Faker + ReportLab to generate dummy data
 - Generate balanced datasets for:
-  - invoice
-  - id_card
   - driver_license
   - passport
-  - certificate
+  - ielts certificate
+  - medicare card
+  - Working with children
+  - engery bill
 
-#### Sample Output
+
+<!-- #### Sample Output
 
 ![Sample Invoice](sample_invoice_1.jpg)
 
@@ -32,4 +34,4 @@
 
 ### Dataset
 - Hugging Face Dataset:
-[dummy-dataset-documents-ocr](https://huggingface.co/datasets/Chino-01/dummy-dataset-documents-ocr)
+[dummy-dataset-documents-ocr](https://huggingface.co/datasets/Chino-01/dummy-dataset-documents-ocr) -->

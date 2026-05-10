@@ -1,0 +1,13 @@
+{
+  "medicare_card_number": "1209004167",
+  "medicare_card_first_name": "ASHLEY",
+  "medicare_card_middle_name": null,
+  "medicare_card_last_name": "RUIZ",
+  "medicare_card_expiry_date": "04/2026",
+  "medicare_card_position": "1",
+  "medicare_card_colour": "green",
+  "document_front": [
+    "output/medicare/medicare_0001.png"
+  ],
+  "document_back": []
+}

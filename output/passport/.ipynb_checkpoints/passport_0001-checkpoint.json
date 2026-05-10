@@ -1,0 +1,17 @@
+{
+  "passport_first_name": "NICHOLAS",
+  "passport_middle_name": null,
+  "passport_last_name": "THOMPSON",
+  "passport_number": "VN0531409",
+  "passport_date_of_birth": "2006-12-09",
+  "passport_expiry_date": "2033-06-09",
+  "passport_nationality": "AUSTRALIAN",
+  "passport_gender": "F",
+  "passport_place_of_birth": "NEWCASTLE",
+  "passport_mrz_line1": "P<AUSTHOMPSON<<NICHOLAS<<<<<<<<<<<<<<<<<<<<<",
+  "passport_mrz_line2": "VN05314090AUS061209F3306090<<<<<<<<<<<<<<0",
+  "document_front": [
+    "output/passport/passport_0001.png"
+  ],
+  "document_back": []
+}

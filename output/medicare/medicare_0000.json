@@ -1,0 +1,13 @@
+{
+  "medicare_card_number": "1583909367",
+  "medicare_card_first_name": "TODD",
+  "medicare_card_middle_name": null,
+  "medicare_card_last_name": "WIGGINS",
+  "medicare_card_expiry_date": "05/2029",
+  "medicare_card_position": "2",
+  "medicare_card_colour": "green",
+  "document_front": [
+    "output/medicare/medicare_0000.png"
+  ],
+  "document_back": []
+}

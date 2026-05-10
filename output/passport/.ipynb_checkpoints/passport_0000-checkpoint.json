@@ -1,0 +1,17 @@
+{
+  "passport_first_name": "ANGELA",
+  "passport_middle_name": "REBECCA",
+  "passport_last_name": "TAYLOR",
+  "passport_number": "UQ1901760",
+  "passport_date_of_birth": "2006-08-05",
+  "passport_expiry_date": "2032-03-01",
+  "passport_nationality": "AUSTRALIAN",
+  "passport_gender": "F",
+  "passport_place_of_birth": "GEELONG",
+  "passport_mrz_line1": "P<AUSTAYLOR<<ANGELA<REBECCA<<<<<<<<<<<<<<<<<",
+  "passport_mrz_line2": "UQ19017600AUS060805F3203010<<<<<<<<<<<<<<0",
+  "document_front": [
+    "output/passport/passport_0000.png"
+  ],
+  "document_back": []
+}

@@ -1,0 +1,14 @@
+{
+  "driver_licence_first_name": "TAMARA",
+  "driver_licence_middle_name": "B",
+  "driver_licence_last_name": "REED",
+  "driver_licence_number": "216167020",
+  "driver_licence_date_of_birth": "1949-04-04",
+  "driver_licence_expiry_date": "2031-06-12",
+  "driver_licence_state": "VIC",
+  "driver_licence_address": "88 MONTGOMERY SERVICE WAY RONALDTON VIC 3980",
+  "document_front": [
+    "output/driver_licence/driver_licence_0001.png"
+  ],
+  "document_back": []
+}

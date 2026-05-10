@@ -121,7 +121,7 @@ These fields store image references, uploaded image paths, cloud storage URLs, o
   "document_front": {
     "type": "array",
     "title": "Document Front Photo",
-    "description": "Image list containing the front side of the document",
+    "description": "Image the front side of the document",
     "items": {
       "type": "string",
       "description": "Image path, URL, or base64 string"
@@ -132,7 +132,7 @@ These fields store image references, uploaded image paths, cloud storage URLs, o
   "document_back": {
     "type": "array",
     "title": "Document Back Photo",
-    "description": "Image list containing the back side of the document",
+    "description": "Image the back side of the document",
     "items": {
       "type": "string",
       "description": "Image path, URL, or base64 string"
