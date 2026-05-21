@@ -36,3 +36,6 @@
 ### Dataset
 - Hugging Face Dataset:
 [dummy-dataset-documents-ocr](https://huggingface.co/datasets/Chino-01/dummy-dataset-documents-ocr) -->
+
+## Generate data
+Having some generated sample data (passport + medicare card) at: [synthetic-doc-generator-data](https://github.com/NguyenNgocChien-01/synthetic-doc-generator/tree/main/dataset)
