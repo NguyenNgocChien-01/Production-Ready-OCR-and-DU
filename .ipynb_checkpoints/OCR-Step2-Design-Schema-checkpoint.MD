@@ -958,245 +958,121 @@ Because of this:
 
 ```json
 {
-  "title": "Energy Bill",
-  "description": "Production-ready extraction schema for electricity and gas utility bills",
+  "title": "Australian Energy Bill",
   "type": "object",
-
   "properties": {
-
-    "energy_bill_provider_name": {
+    "document_type": {
       "type": "string",
-      "title": "Energy Provider Name",
-      "description": "Name of the electricity or gas retailer issuing the bill",
+      "title": "Document Type",
+      "description": "Always ENERGY_BILL.",
       "required": true
     },
-
-    "energy_bill_provider_bn": {
+    "energy_bill_type": {
+      "type": "string",
+      "title": "Energy Type",
+      "description": "Type of energy supply as shown on the bill (e.g., 'electricity', 'gas', 'dual').",
+      "enum": ["electricity", "gas", "dual"],
+      "required": true
+    },
+    "energy_bill_provider_name": {
+      "type": "string",
+      "title": "Provider Name",
+      "description": "Trading name of the energy provider (e.g., 'EnergyAustralia').",
+      "required": true
+    },
+    "energy_bill_provider_abn": {
       "type": ["string", "null"],
-      "title": "Provider BN",
-      "description": "Business Number of the energy provider",
+      "title": "Provider ABN",
+      "description": "Australian Business Number of the energy provider (e.g., '99 086 014 968').",
       "required": false
     },
-
     "energy_bill_account_holder_name": {
       "type": "string",
       "title": "Account Holder Name",
-      "description": "Full name of the primary account holder",
+      "description": "Full name of the account holder as shown on the bill (e.g., 'Miss S Sample').",
       "required": true
     },
-
     "energy_bill_account_number": {
       "type": "string",
       "title": "Account Number",
-      "description": "Customer utility account number",
+      "description": "Customer account number as shown on the bill (e.g., '1234 567 890').",
       "required": true
     },
-
-    "energy_bill_invoice_number": {
-      "type": ["string", "null"],
-      "title": "Invoice Number",
-      "description": "Unique invoice or bill reference number",
-      "required": false
-    },
-
     "energy_bill_nmi": {
       "type": ["string", "null"],
       "title": "National Metering Identifier (NMI)",
-      "description": "Unique electricity meter identifier used",
+      "description": "10-character electricity meter identifier assigned to the supply point (e.g., '1234567890'). Electricity only.",
       "required": false
     },
-
     "energy_bill_mirn": {
       "type": ["string", "null"],
-      "title": "Meter Installation Registration Number (MIRN)",
-      "description": "Unique gas meter identifier used",
+      "title": "Meter Installation Reference Number (MIRN)",
+      "description": "Gas meter identifier assigned to the supply point. Gas or dual only.",
       "required": false
     },
-
-    "energy_bill_meter_number": {
-      "type": ["string", "null"],
-      "title": "Meter Number",
-      "description": "Physical utility meter serial number",
-      "required": false
-    },
-
     "energy_bill_service_address": {
-      "type": "string",
+      "type": "object",
       "title": "Service Address",
-      "description": "Address where electricity or gas service is supplied",
-      "required": true
+      "description": "Physical supply address used for Proof of Address verification.",
+      "required": true,
+      "properties": {
+        "street": {
+          "type": "string",
+          "title": "Street",
+          "description": "Street number and name (e.g., '37 Sample Road').",
+          "required": true
+        },
+        "suburb": {
+          "type": "string",
+          "title": "Suburb",
+          "description": "Suburb or locality (e.g., 'SAMPLE SUBURB').",
+          "required": true
+        },
+        "state": {
+          "type": "string",
+          "title": "State",
+          "description": "Australian state or territory abbreviation (e.g., 'VIC').",
+          "required": true
+        },
+        "postcode": {
+          "type": "string",
+          "title": "Postcode",
+          "description": "4-digit Australian postcode (e.g., '3000').",
+          "required": true
+        }
+      }
     },
-
-    "energy_bill_postal_address": {
-      "type": ["string", "null"],
-      "title": "Postal Address",
-      "description": "Mailing address used for bill delivery",
-      "required": false
-    },
-
     "energy_bill_issue_date": {
-      "type": ["string", "null"],
+      "type": "string",
       "format": "date",
       "title": "Bill Issue Date",
-      "description": "Date the utility bill was issued",
-      "required": false
+      "description": "Date the bill was issued (YYYY-MM-DD), used to verify document recency (e.g., '2023-08-04').",
+      "required": true
     },
-
     "energy_bill_due_date": {
       "type": "string",
       "format": "date",
-      "title": "Payment Due Date",
-      "description": "Final payment due date for the bill",
+      "title": "Bill Due Date",
+      "description": "Payment due date (YYYY-MM-DD), used to confirm document validity (e.g., '2023-08-21').",
       "required": true
     },
-
-    "energy_bill_billing_period_start": {
-      "type": ["string", "null"],
-      "format": "date",
-      "title": "Billing Period Start Date",
-      "description": "Start date of the billing cycle",
-      "required": false
-    },
-
-    "energy_bill_billing_period_end": {
-      "type": ["string", "null"],
-      "format": "date",
-      "title": "Billing Period End Date",
-      "description": "End date of the billing cycle",
-      "required": false
-    },
-
     "energy_bill_total_amount_due": {
       "type": "number",
-      "title": "Total Amount Due",
-      "description": "Total payable amount shown on the bill",
+      "title": "Total Amount Due (AUD)",
+      "description": "Total amount payable in AUD as shown on the bill (e.g., 538.77).",
       "required": true
     },
-
-    "energy_bill_account_balance": {
-      "type": ["number", "null"],
-      "title": "Account Balance",
-      "description": "Current account balance displayed on the bill",
-      "required": false
-    },
-
-    "energy_bill_supply_charge": {
-      "type": ["number", "null"],
-      "title": "Supply Charge",
-      "description": "Fixed daily supply charge amount",
-      "required": false
-    },
-
-    "energy_bill_usage_charge": {
-      "type": ["number", "null"],
-      "title": "Usage Charge",
-      "description": "Variable charge based on energy consumption",
-      "required": false
-    },
-
-    "energy_bill_usage_kwh": {
-      "type": ["number", "null"],
-      "title": "Electricity Usage (kWh)",
-      "description": "Electricity usage measured in kilowatt-hours",
-      "required": false
-    },
-
-    "energy_bill_usage_mj": {
-      "type": ["number", "null"],
-      "title": "Gas Usage (MJ)",
-      "description": "Gas usage measured in megajoules",
-      "required": false
-    },
-
-    "energy_bill_tariff_type": {
-      "type": ["string", "null"],
-      "title": "Tariff Type",
-      "description": "Energy tariff or pricing plan type",
-      "required": false
-    },
-
-    "energy_bill_gst_amount": {
-      "type": ["number", "null"],
-      "title": "GST Amount",
-      "description": "Goods and Services Tax (GST) amount included in the bill",
-      "required": false
-    },
-
-    "energy_bill_bpay_code": {
-      "type": ["string", "null"],
-      "title": "BPAY Biller Code",
-      "description": "BPAY biller code used for payments",
-      "required": false
-    },
-
-    "energy_bill_bpay_reference": {
-      "type": ["string", "null"],
-      "title": "BPAY Reference Number",
-      "description": "Customer BPAY payment reference number",
-      "required": false
-    },
-
-    "energy_bill_payment_reference": {
-      "type": ["string", "null"],
-      "title": "Payment Reference",
-      "description": "Reference number used for payment processing",
-      "required": false
-    },
-
-    "energy_bill_payment_plan": {
-      "type": ["boolean", "null"],
-      "title": "Payment Plan Indicator",
-      "description": "Whether the customer is enrolled in a payment plan",
-      "required": false
-    },
-
-    "energy_bill_concession_applied": {
-      "type": ["boolean", "null"],
-      "title": "Concession Applied",
-      "description": "Whether a government concession or discount has been applied",
-      "required": false
-    },
-
-    "energy_bill_document_type": {
-      "type": ["string", "null"],
-      "enum": [
-        "electricity",
-        "gas",
-        "combined",
-        null
-      ],
-      "title": "Energy Bill Type",
-      "description": "Type of utility bill document",
-      "required": false
-    },
-
-    "energy_bill_barcode_present": {
-      "type": ["boolean", "null"],
-      "title": "Barcode Present",
-      "description": "Whether a payment barcode is detected on the bill",
-      "required": false
-    },
-
     "document_front": {
       "type": "array",
-      "title": "Energy Bill Front Images",
-      "description": "Front page images of the utility bill",
+      "title": "Bill Page Images",
+      "description": "List of file paths for the original bill page images, in page order.",
+      "required": true,
       "items": {
         "type": "string",
-        "description": "Image path, URL, or base64 encoded image"
-      },
-      "required": true
-    },
-
-    "document_back": {
-      "type": "array",
-      "title": "Energy Bill Additional Images",
-      "description": "Additional pages or back-side images of the utility bill",
-      "items": {
-        "type": "string",
-        "description": "Image path, URL, or base64 encoded image"
-      },
-      "required": false
+        "title": "Image Path",
+        "description": "File path of each bill page image (e.g., 'images/energy_bill_page001.png').",
+        "required": true
+      }
     }
   }
 }
