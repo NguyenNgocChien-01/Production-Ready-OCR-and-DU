@@ -2,7 +2,7 @@
 
 ## Abtracts
 
-### Step 1: Environment Setup & OCR Fundamentals
+# Step 1: Environment Setup & OCR Fundamentals
 - OCR: Image/PDF to text (Tesseract OCR, PaddleOCR…)
 - Document Understanding: Image/PDF to structured data (JSON)
 - Supported document types: invoice, ID card, driver license, passport, certificate
@@ -10,12 +10,12 @@
 
 ---
 
-### Step 2: Schema Design [Step 2](NguyenNgocChien-Step2-Intern-OCR.MD)
+# Step 2: Schema Design [Step 2](NguyenNgocChien-Step2-Intern-OCR.MD)
 - Design JSON schema for each document type 
 
 ---
 
-### Step 3: Synthetic Data Generation
+# Step 3: Synthetic Data Generation
 - Use Faker + ReportLab to generate dummy data
 - Generate balanced datasets for:
   - driver_license
@@ -72,7 +72,7 @@ Having some generated sample data at: [synthetic-doc-generator-data](https://git
 - working with children check (state vic)
 
 
-### Step 4-5-6: Classify - Choose model - Finetune
+# Step 4-5-6: Classify - Choose model - Finetune
 
 - I don't used classtify model base. I'll combine both the classification and extraction steps into a single LLM model because this approach can reduce pipeline complexity.
 
