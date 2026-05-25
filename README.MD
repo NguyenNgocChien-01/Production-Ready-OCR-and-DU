@@ -38,7 +38,38 @@
 [dummy-dataset-documents-ocr](https://huggingface.co/datasets/Chino-01/dummy-dataset-documents-ocr) -->
 
 ## Generate data
-Having some generated sample data (passport + medicare card) at: [synthetic-doc-generator-data](https://github.com/NguyenNgocChien-01/synthetic-doc-generator/tree/main/dataset)
+
+The architecture requires ingesting a base image combined with a text prompt to render a new image with replaced data while maintaining the original layout.
+The standardized payload consumes approximately 4000 input tokens and 1300 output tokens.  
+
+### Google Gemini 2.5 Flash Image
+- Priced at $0.30 per 1M input (text + image) tokens and $30.00 per 1M output tokens
+- Official pricing reference: [Agent Platform Pricing | Google Cloud](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing#standard_1)
+- Calculates to  ~$0.04 per image
+  
+### OpenAI GPT-Image-2
+- Priced at $8.00 per 1M image input tokens, $5.00 per 1M text input tokens, and $30.00 per 1M output tokens  
+- Official pricing reference: [OpenAI API Pricing | OpenAI](https://openai.com/api/pricing/)
+  
+### Claude
+- Technical: Non-compliant (Analyzes input images only but cannot generate output images)
+- Reference: [Vision - Claude API Docs](https://platform.claude.com/docs/en/build-with-claude/vision)
+
+### OpenAI DALL-E
+- Technical: Operates strictly on a Text-to-Image mechanism without accepting base image inputs
+- Reference: [DALL·E 3 | OpenAI](https://openai.com/index/dall-e-3/)
+
+
+
+
+Gemini ensures full technical compliance while reducing API costs compared to OpenAI --> Chose **Gemini-2.5-flash-image**
+
+
+Having some generated sample data at: [synthetic-doc-generator-data](https://github.com/NguyenNgocChien-01/synthetic-doc-generator/tree/main/dataset) (~10 sample).
+- passport
+- medicare card(3 type)
+- driver license (state vic)
+- working with children check (state vic)
 
 
 ### Step 4-5-6: Classify - Choose model - Finetune
@@ -47,6 +78,6 @@ Having some generated sample data (passport + medicare card) at: [synthetic-doc-
 
 - The fine-tune process will be based on: [Fine-tune VLMs](https://aws.amazon.com/blogs/machine-learning/fine-tune-vlms-for-multipage-document-to-json-with-sagemaker-ai-and-swift/#:~:text=Developing%20an%20evaluation%20framework%20to,and%20deploy%20models%20at%20scale)
 
-- My notebook to fine-tune: [Note book](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
+- My notebook to fine-tune: [Notebook Colab](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
 
 - My report: [Step4-5-6](OCR-Step4-5-6.md)
