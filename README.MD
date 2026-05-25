@@ -80,4 +80,4 @@ Having some generated sample data at: [synthetic-doc-generator-data](https://git
 
 - My notebook to fine-tune: [Notebook Colab](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
 
-- My report: [Step4-5-6](OCR-Step4-5-6.md)
+- My report: [Step4-5-6](OCR-Step4-5-6.md)....
