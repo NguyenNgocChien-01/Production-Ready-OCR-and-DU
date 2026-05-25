@@ -1,4 +1,4 @@
-# Production-Ready OCR & Document Understanding Mastery Challenge
+# Production-Ready OCR & Document Understanding Mastery Challenge [PDF](Production-Ready_OCR__Document_Understanding_Mastery_Challenge.pdf)
 
 ## Abtracts
 
@@ -39,3 +39,12 @@
 
 ## Generate data
 Having some generated sample data (passport + medicare card) at: [synthetic-doc-generator-data](https://github.com/NguyenNgocChien-01/synthetic-doc-generator/tree/main/dataset)
+
+
+### Step 4-5-6: Classify - Choose model - Finetune
+
+I don't used classtify model base. I'll combine both the classification and extraction steps into a single LLM model because this approach can reduce pipeline complexity.
+
+The fine-tune process will be based on: [Fine-tune VLMs](https://aws.amazon.com/blogs/machine-learning/fine-tune-vlms-for-multipage-document-to-json-with-sagemaker-ai-and-swift/#:~:text=Developing%20an%20evaluation%20framework%20to,and%20deploy%20models%20at%20scale)
+
+My notebook to fine-tune: [Note book](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
