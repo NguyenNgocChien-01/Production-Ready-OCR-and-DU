@@ -11,7 +11,7 @@ update later.
 
 # Step 6:
 # Fine-Tuning Report: Document Information Extraction
-- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
+- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1I8zJdJjWojup4fIWG3AS2MCJEQzURyO3#scrollTo=1vK8iiRS9a9y).
   
 Model: Qwen2-VL-2B-Instruct
 Framework: swift
@@ -34,7 +34,7 @@ data/
 - Now, I have ~10 image + json sample per passport, vic driver license, vic wwc, 3 type medicare card = ~ 70 sample.
 -  Schema json each type: [Step 2](ocr-project/OCR-Step2-Design-Schema.MD)
   
-# 02 -  Create Custom Dataset Swift Format [02_create_custom_dataset_swift_local.ipynb](https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link)
+# [02 -  Create Custom Dataset Swift Format](https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link)
 
 ## Goal: convert raw images and JSON labels into SWIFT training format.
 **1. Load data from local:** load_local_data(doc_dir, label_dir, skip_stems)
@@ -46,6 +46,7 @@ Scans labels/ recursively for .json files. For each label finds the matching ima
 - **Else** ==> Stratified by doc type, 80% train / 10% dev / 10% test, random seed 42. Types with fewer than 3 samples go entirely to train.
 - 
 ```text
+
 Distribution by document type:
 doc_type
 aus_driver_license/act       1
@@ -54,16 +55,15 @@ aus_driver_license/nt        1
 aus_driver_license/qld       1
 aus_driver_license/sa        1
 aus_driver_license/tas       1
-aus_driver_license/vic      11
+aus_driver_license/vic      16
 aus_driver_license/wa        1
 aus_medicare_card/blue      13
 aus_medicare_card/green     11
 aus_medicare_card/yellow    11
-aus_passport                11
-aus_wwc_card/vic            10
+aus_passport                26
+aus_wwc_card/vic            25
 
-Total: 74 samples, 13 types
-
+Total: 109 samples, 13 types
  Document Type                              Total  Train    Dev   Test
 ----------------------------------------------------------------------
 aus_driver_license/act                          1      1      0      0  (insufficient samples)
@@ -72,15 +72,16 @@ aus_driver_license/nt                           1      1      0      0  (insuffi
 aus_driver_license/qld                          1      1      0      0  (insufficient samples)
 aus_driver_license/sa                           1      1      0      0  (insufficient samples)
 aus_driver_license/tas                          1      1      0      0  (insufficient samples)
-aus_driver_license/vic                         11      9      1      1
+aus_driver_license/vic                         16     14      1      1
 aus_driver_license/wa                           1      1      0      0  (insufficient samples)
 aus_medicare_card/blue                         13     11      1      1
 aus_medicare_card/green                        11      9      1      1
 aus_medicare_card/yellow                       11      9      1      1
-aus_passport                                   11      9      1      1
-aus_wwc_card/vic                               10      8      1      1
+aus_passport                                   26     22      2      2
+aus_wwc_card/vic                               25     21      2      2
 ----------------------------------------------------------------------
- TOTAL                                         74     62      6      6
+ TOTAL                                        109     93      8      8
+ 
 ```
 
 **3. Extract images & create swift format:**
@@ -196,6 +197,7 @@ Such as:
 - *--freeze_aligner*: vector --> LLM Space.
 - *--gradient_checkpointing*: true -> down Vram, up time backward. Default = flase 
 
+--> Run (This result is from the previous time, not this time with data current):
 ```
 Train:   0%|          | 0/40 [00:00<?, ?it/s][INFO:swift] use_logits_to_keep: True
 
@@ -268,4 +270,6 @@ Input an image path or URL <<< /content/template.jpg
 
 # 05 - Evalution
 ![Evalution](img/evalution-model.png)
+
+
 
