@@ -78,6 +78,5 @@ Having some generated sample data at: [synthetic-doc-generator-data](https://git
 
 - The fine-tune process will be based on: [Fine-tune VLMs](https://aws.amazon.com/blogs/machine-learning/fine-tune-vlms-for-multipage-document-to-json-with-sagemaker-ai-and-swift/#:~:text=Developing%20an%20evaluation%20framework%20to,and%20deploy%20models%20at%20scale)
 
-- My notebook to fine-tune: [Notebook Colab](https://colab.research.google.com/drive/1TNgAs_IInByV5f4pLvdbI3YwLIsJbSRe#scrollTo=tP3LSL97N2wx)
 
 - My report: [Step4-5-6](OCR-Step4-5-6.md)....
