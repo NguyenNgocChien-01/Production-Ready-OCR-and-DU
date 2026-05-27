@@ -31,7 +31,7 @@ data/
 └── labels/  (mirrors documents)
 ```
 
-- Now, I have ~10 image + json sample per passport, vic driver license, vic wwc, 3 type medicare card = ~ 70 sample.
+- Now, I have ~20 image + json sample per passport, vic driver license, vic wwc, 3 type medicare card = ~ 100 sample.
 -  Schema json each type: [Step 2](ocr-project/OCR-Step2-Design-Schema.MD)
   
 # [02 -  Create Custom Dataset Swift Format](https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link)
