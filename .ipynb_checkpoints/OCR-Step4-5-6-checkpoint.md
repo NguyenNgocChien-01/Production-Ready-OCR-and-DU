@@ -1,17 +1,17 @@
-## Classify - Choose Models - Finetune
+# Classify - Finetune
 
-- [Step 4: Classify](#step-4-classify)
-- [Step 5: Choose model](#step-5-choose-model)
-- [STEP 6: Fine-tune](#step-6)
+- [Classify](#classify)
+- [Fine-tune](#Fine-Tuning-Report-Document-Information-Extraction)
+  - [01 - Dataset Preparation](#01-Dataset-Preparation)
+  - [02 -  Create Custom Dataset Swift Format](#02-Create-Custom-Dataset-Swift-Format)
+  - [03 - Fine-tune](#03-Fine-tune)
+  - [# 04 - Inference](#04-Inference)
 
-# Step 4: Classify
+# Classify
 - For Step 4, I do not use standalone base models. Instead, I will use a fine-tuned Large Language Model for document classification. This LLM processes OCR text and spatial data simultaneously to output accurate labels.
-# Step 5: Choose model
-update later.
-
-# Step 6:
+- 
 # Fine-Tuning Report: Document Information Extraction
-- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx).
+- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx)
   
 Model: Qwen2-VL-2B-Instruct
 Framework: swift
@@ -34,8 +34,8 @@ data/
 - Now, I have ~20 image + json sample per passport, vic driver license, vic wwc, 3 type medicare card = ~ 100 sample.
 -  Schema json each type: [Step 2](ocr-project/OCR-Step2-Design-Schema.MD)
   
-# [02 -  Create Custom Dataset Swift Format](https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link)
-
+# 02 -  Create Custom Dataset Swift Format
+<!-- (https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link) -->
 ## Goal: convert raw images and JSON labels into SWIFT training format.
 **1. Load data from local:** load_local_data(doc_dir, label_dir, skip_stems)
 Scans labels/ recursively for .json files. For each label finds the matching image (.jpg/.png/.pdf). Returns a list of records containing filename, doc_type, target_data, and doc_bytes.
@@ -197,20 +197,29 @@ Such as:
 - *--freeze_aligner*: vector --> LLM Space.
 - *--gradient_checkpointing*: true -> down Vram, up time backward. Default = flase 
 
---> Run (This result is from the previous time, not this time with data current):
+--> Run:
 ```
-Train:   0%|          | 0/40 [00:00<?, ?it/s][INFO:swift] use_logits_to_keep: True
+[INFO:swift] model_parameter_info: PeftModelForCausalLM: 2218.2180M Params (9.2324M Trainable [0.4162%]), 0.0001M Buffers.
+[INFO:swift] use_reentrant: True
+[INFO:swift] The logging file will be saved in: /content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/models/finetune/v6-20260528-021630/logging.jsonl
+[INFO:swift] Successfully registered post_encode hook: ['PeftModelForCausalLM'].
+[transformers] The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'eos_token_id': 151645, 'bos_token_id': None, 'pad_token_id': 151643}.
+Train:   0%|          | 0/60 [00:00<?, ?it/s][INFO:swift] use_logits_to_keep: True
+Train:   2%|▏         | 1/60 [00:42<41:47, 42.51s/it]{'loss': '0.3713', 'grad_norm': '0.8901', 'learning_rate': '3.333e-05', 'token_acc': '0.921', 'epoch': '0.08602', 'global_step/max_steps': '1/60', 'elapsed_time': '43s', 'remaining_time': '41m 48s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '42.51'}
+Train:   8%|▊         | 5/60 [03:52<43:40, 47.64s/it]{'loss': '0.2992', 'grad_norm': '0.6541', 'learning_rate': '9.97e-05', 'token_acc': '0.9285', 'epoch': '0.4301', 'global_step/max_steps': '5/60', 'elapsed_time': '3m 53s', 'remaining_time': '42m 43s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '46.6'}
+Train:  17%|█▋        | 10/60 [07:55<40:14, 48.30s/it]{'loss': '0.1605', 'grad_norm': '0.4602', 'learning_rate': '9.632e-05', 'token_acc': '0.9575', 'epoch': '0.8602', 'global_step/max_steps': '10/60', 'elapsed_time': '7m 56s', 'remaining_time': '39m 38s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '47.56'}
+Train:  25%|██▌       | 15/60 [11:27<33:24, 44.53s/it]{'loss': '0.08331', 'grad_norm': '0.3851', 'learning_rate': '8.946e-05', 'token_acc': '0.9808', 'epoch': '1.258', 'global_step/max_steps': '15/60', 'elapsed_time': '11m 28s', 'remaining_time': '34m 24s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.86'}
+Train:  33%|███▎      | 20/60 [15:20<30:25, 45.63s/it]{'loss': '0.06889', 'grad_norm': '0.494', 'learning_rate': '7.961e-05', 'token_acc': '0.9834', 'epoch': '1.688', 'global_step/max_steps': '20/60', 'elapsed_time': '15m 20s', 'remaining_time': '30m 41s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '46.01'}
+Train:  42%|████▏     | 25/60 [18:57<24:59, 42.84s/it]{'loss': '0.05346', 'grad_norm': '0.2599', 'learning_rate': '6.753e-05', 'token_acc': '0.9874', 'epoch': '2.086', 'global_step/max_steps': '25/60', 'elapsed_time': '18m 58s', 'remaining_time': '26m 33s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.51'}
+Train:  50%|█████     | 30/60 [22:49<22:48, 45.60s/it]{'loss': '0.02927', 'grad_norm': '0.1722', 'learning_rate': '5.413e-05', 'token_acc': '0.9924', 'epoch': '2.516', 'global_step/max_steps': '30/60', 'elapsed_time': '22m 50s', 'remaining_time': '22m 50s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.66'}
+Train:  58%|█████▊    | 35/60 [26:42<19:20, 46.42s/it]{'loss': '0.03943', 'grad_norm': '0.2415', 'learning_rate': '4.041e-05', 'token_acc': '0.99', 'epoch': '2.946', 'global_step/max_steps': '35/60', 'elapsed_time': '26m 43s', 'remaining_time': '19m 5s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.79'}
+Train:  67%|██████▋   | 40/60 [30:21<15:21, 46.09s/it]{'loss': '0.01985', 'grad_norm': '0.2619', 'learning_rate': '2.742e-05', 'token_acc': '0.9944', 'epoch': '3.344', 'global_step/max_steps': '40/60', 'elapsed_time': '30m 21s', 'remaining_time': '15m 11s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.53'}
+Train:  75%|███████▌  | 45/60 [34:08<11:23, 45.57s/it]{'loss': '0.02995', 'grad_norm': '0.2408', 'learning_rate': '1.614e-05', 'token_acc': '0.9925', 'epoch': '3.774', 'global_step/max_steps': '45/60', 'elapsed_time': '34m 8s', 'remaining_time': '11m 23s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.52'}
+Train:  83%|████████▎ | 50/60 [37:45<07:18, 43.90s/it]{'loss': '0.03346', 'grad_norm': '0.1691', 'learning_rate': '7.4e-06', 'token_acc': '0.9909', 'epoch': '4.172', 'global_step/max_steps': '50/60', 'elapsed_time': '37m 45s', 'remaining_time': '7m 33s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.3'}
 
-Train:   2%|▎         | 1/40 [01:08<44:41, 68.75s/it]{'loss': '0.3605', 'grad_norm': '1.021', 'learning_rate': '5e-05', 'token_acc': '0.9222', 'epoch': '0.129', 'global_step/max_steps': '1/40', 'elapsed_time': '1m 9s', 'remaining_time': '44m 41s', 'memory(GiB)': '11.15', 'train_speed(s/it)': '68.75'}
+Val: 100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
+{'eval_loss': '0.03461', 'eval_runtime': '18.36', 'eval_samples_per_second': '0.436', 'eval_steps_per_second': '0.436', 'eval_token_acc': '0.99', 'epoch': '4.172', 'global_step/max_steps': '50/60', 'elapsed_time': '38m 4s', 'remaining_time': '7m 37s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.67'}
 
-Train:  12%|█▎        | 5/40 [06:05<43:34, 74.69s/it]{'loss': '0.3135', 'grad_norm': '0.5845', 'learning_rate': '9.847e-05', 'token_acc': '0.9275', 'epoch': '0.6452', 'global_step/max_steps': '5/40', 'elapsed_time': '6m 5s', 'remaining_time': '42m 38s', 'memory(GiB)': '11.17', 'train_speed(s/it)': '73.07'}
-
-...
-
-Train: 100%|██████████| 40/40 [46:24<00:00, 66.13s/it]{'loss': '0.03774', 'grad_norm': '0.2161', 'learning_rate': '0', 'token_acc': '0.9921', 'epoch': '5', 'global_step/max_steps': '40/40', 'elapsed_time': '46m 24s', 'remaining_time': '0s', 'memory(GiB)': '11.5', 'train_speed(s/it)': '69.6'}
-
-Val: 100%|██████████| 6/6 [00:13<00:00,  2.18s/it]
-{'eval_loss': '0.0723', 'eval_runtime': '17.57', 'eval_samples_per_second': '0.341', 'eval_steps_per_second': '0.341', 'eval_token_acc': '0.9747', 'epoch': '5', 'global_step/max_steps': '40/40', 'elapsed_time': '46m 42s', 'remaining_time': '0s', 'memory(GiB)': '11.5', 'train_speed(s/it)': '70.05'}
 
 ```
 
