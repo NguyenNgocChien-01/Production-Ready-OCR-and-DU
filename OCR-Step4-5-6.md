@@ -11,7 +11,7 @@ update later.
 
 # Step 6:
 # Fine-Tuning Report: Document Information Extraction
-- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1I8zJdJjWojup4fIWG3AS2MCJEQzURyO3#scrollTo=1vK8iiRS9a9y).
+- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx).
   
 Model: Qwen2-VL-2B-Instruct
 Framework: swift
