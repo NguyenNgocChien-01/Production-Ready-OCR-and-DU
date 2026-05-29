@@ -187,106 +187,114 @@ The OCR system should prioritize high-confidence extraction of identity fields a
 
 ```json
 {
-  "title": "Passport",
-  "description": "Structured extraction schema for international passports",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Australian Passport",
   "type": "object",
   "properties": {
-    "passport_first_name": {
+    "document_type": {
       "type": "string",
-      "title": "First Name",
-      "description": "Passport holder first name",
+      "title": "Document Type",
+      "description": "Always AUS_PASSPORT",
       "required": true
     },
-
-    "passport_middle_name": {
-      "type": ["string", "null"],
-      "title": "Middle Name",
-      "description": "Passport holder middle name",
-      "required": false
-    },
-
-    "passport_last_name": {
-      "type": "string",
-      "title": "Last Name",
-      "description": "Passport holder last name",
-      "required": true
-    },
-
-    "passport_number": {
+    "australian_passport_number": {
       "type": "string",
       "title": "Passport Number",
-      "description": "Unique passport identification number",
+      "description": "Document number as shown in the top-right of the Australian passport data page (e.g. RA0123456)",
       "required": true
     },
-
-    "passport_date_of_birth": {
+    "australian_passport_last_name": {
       "type": "string",
-      "format": "date",
+      "title": "Last Name",
+      "description": "Family name / surname as shown on passport",
+      "required": true
+    },
+    "australian_passport_first_name": {
+      "type": "string",
+      "title": "First Name",
+      "description": "Given name/Fi as shown on the Australian passpor",
+      "required": true
+    },
+    "australian_passport_middle_name": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "Middle Name",
+      "description": "Middle name as shown on passport",
+      "required": false
+    },
+    "australian_passport_date_of_birth": {
+      "type": "string",
       "title": "Date of Birth",
-      "description": "Passport holder birth date",
+      "description": "Date of birth as shown on the Australian passport data page",
       "required": true
     },
-
-    "passport_expiry_date": {
+    "australian_passport_date_of_issue": {
       "type": "string",
-      "format": "date",
-      "title": "Expiry Date",
-      "description": "Passport expiration date",
+      "title": "Date of Issue",
+      "description": "Date of issue as shown on the Australian passport data page",
       "required": true
     },
-
-    "passport_nationality": {
+    "australian_passport_expiry_date": {
+      "type": "string",
+      "title": "Expiry Date",
+      "description": "Date of expiry as shown on the Australian passport data page",
+      "required": true
+    },
+    "australian_passport_nationality": {
       "type": "string",
       "title": "Nationality",
-      "description": "Country nationality shown on passport",
+      "description": "Nationality as shown on the passport data page (e.g. AUSTRALIAN)",
       "required": true
     },
-
-    "passport_gender": {
+    "australian_passport_gender": {
       "type": "string",
       "title": "Gender",
-      "description": "Gender shown on passport",
+      "description": "Sex as shown on the Australian passport data page (M, F or X)",
       "required": true
     },
-
-    "passport_place_of_birth": {
+    "australian_passport_place_of_birth": {
       "type": "string",
       "title": "Place of Birth",
-      "description": "Birth place shown on passport",
+      "description": "Place of birth as shown on the Australian passport data page (e.g. CANBERRA)",
       "required": true
     },
-
-    "passport_mrz_line1": {
-      "type": ["string", "null"],
+    "australian_passport_authority": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "Issuing Authority",
+      "description": "Issuing authority as shown on the Australian passport data page (e.g. CANBERRA)",
+      "required": true
+    },
+    "australian_passport_mrz_line1": {
+      "type": "string",
       "title": "MRZ Line 1",
-      "description": "First machine-readable zone line",
-      "required": false
-    },
-
-    "passport_mrz_line2": {
-      "type": ["string", "null"],
-      "title": "MRZ Line 2",
-      "description": "Second machine-readable zone line",
-      "required": false
-    },
-
-    "document_front": {
-      "type": "array",
-      "title": "Passport Front Image",
-      "description": "Image list containing the passport information page",
-      "items": {
-        "type": "string"
-      },
+      "description": "Machine readable zone line 1",
+      "maxLength": 44,
+      "minLength": 44,
       "required": true
     },
-
-    "document_back": {
+    "australian_passport_mrz_line2": {
+      "type": "string",
+      "title": "MRZ Line 2",
+      "description": "Machine readable zone line 2",
+      "maxLength": 44,
+      "minLength": 44,
+      "required": true
+    },
+    "commencement_document_front": {
       "type": "array",
-      "title": "Passport Back Image",
-      "description": "Optional additional passport images",
-      "items": {
-        "type": "string"
-      },
+      "title": "Document Front Photo",
+      "description": "Photo of the Australian passport data page",
+      "required": true
+    },
+    "commencement_document_back": {
+      "type": "array",
+      "title": "Document Back Photo",
+      "description": "Photo of the Australian passport observations page",
       "required": false
     }
   }
@@ -329,88 +337,77 @@ Optional low-value OCR fields may be excluded during MVP implementation to simpl
 
 ```json
 {
-  "title": "Driver Licence",
-  "description": "Structured extraction schema for driver licences",
-  "type": "object",
-  "properties": {
-    "driver_licence_first_name": {
-      "type": "string",
-      "title": "First Name",
-      "description": "Driver first name",
-      "required": true
-    },
-
-    "driver_licence_middle_name": {
-      "type": ["string", "null"],
-      "title": "Middle Name",
-      "description": "Driver middle name",
-      "required": false
-    },
-
-    "driver_licence_last_name": {
-      "type": "string",
-      "title": "Last Name",
-      "description": "Driver last name",
-      "required": true
-    },
-
-    "driver_licence_number": {
-      "type": "string",
-      "title": "Licence Number",
-      "description": "Unique driver licence number",
-      "required": true
-    },
-
-    "driver_licence_date_of_birth": {
-      "type": "string",
-      "format": "date",
-      "title": "Date of Birth",
-      "description": "Driver birth date",
-      "required": true
-    },
-
-    "driver_licence_expiry_date": {
-      "type": "string",
-      "format": "date",
-      "title": "Expiry Date",
-      "description": "Licence expiration date",
-      "required": true
-    },
-
-    "driver_licence_state": {
-      "type": "string",
-      "title": "Issuing State",
-      "description": "Australian state or territory issuing the licence",
-      "required": true
-    },
-
-    "driver_licence_address": {
-      "type": ["string", "null"],
-      "title": "Residential Address",
-      "description": "Residential address shown on licence",
-      "required": false
-    },
-
-    "document_front": {
-      "type": "array",
-      "title": "Licence Front Image",
-      "description": "Front side image of the driver licence",
-      "items": {
-        "type": "string"
-      },
-      "required": true
-    },
-
-    "document_back": {
-      "type": "array",
-      "title": "Licence Back Image",
-      "description": "Back side image of the driver licence",
-      "items": {
-        "type": "string"
-      },
-      "required": false
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Australian Driver's Licence",
+    "type": "object",
+    "properties": {
+        "document_type": {
+            "type": "string",
+            "title": "Document Type",
+            "description": "Always AUS_DRIVER_LICENSE",
+            "required": true
+            },
+        "australian_driver_license_first_name": {
+            "type": "string",
+            "title": "First Name",
+            "description": "First name as shown on the driver's licence (e.g., 'JANE')",
+            "required": true
+        },
+        "australian_driver_license_middle_name": {
+            "type": ["string", "null"],
+            "title": "Middle Name",
+            "description": "Middle name as shown on the driver's licence (e.g., 'LEE')",
+            "required": false
+        },
+        "australian_driver_license_last_name": {
+            "type": "string",
+            "title": "Last Name",
+            "description": "Last name as shown on the driver's licence (e.g., 'CITIZEN')",
+            "required": true
+        },
+        "australian_driver_license_address": {
+            "type": "string",
+            "title": "Address",
+            "description": "Full residential address as shown on the driver's licence",
+            "required": true
+        },
+        "australian_driver_license_licence_number": {
+            "type": "string",
+            "title": "Licence Number",
+            "description": "Licence number as shown on the front of the driver's licence (e.g., '987654321')",
+            "required": true
+        },
+        "australian_driver_license_state": {
+            "type": "string",
+            "title": "State of Issue",
+            "description": "Australian state or territory that issued the driver's licence (e.g., 'VIC')",
+            "required": true
+        },
+        "australian_driver_license_card_number": {
+            "type": "string",
+            "title": "Card Number",
+            "description": "Card number printed on the back of the driver's licence (e.g., 'D9999999')",
+            "required": true
+        },
+        "australian_driver_license_class": {
+            "type": "string",
+            "title": "Class",
+            "description": "Licence class as shown on the driver's licence (e.g., 'CAR')",
+            "required": true
+        },
+        "australian_driver_license_expiry_date": {
+            "type": "string",
+            "title": "Licence Expiry",
+            "description": "Licence expiry date as shown on the front of the driver's licence (e.g., '2019-05-20')",
+            "required": true
+        },
+        "australian_driver_license_dob": {
+            "type": "string",
+            "title": "Date of Birth",
+            "description": "Date of birth as shown on the front of the driver's licence (e.g., '1983-07-29')",
+            "required": true
+        }
     }
-  }
 }
 ```
 
@@ -447,62 +444,95 @@ Non-essential appearance-related fields can be removed to reduce OCR complexity.
 
 ```json
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Medicare Card",
-  "description": "Structured extraction schema for Medicare cards",
   "type": "object",
   "properties": {
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "description": "Always AUS_MEDICARE_CARD",
+      "required": true
+    },
+    "medicare_card_type": {
+      "type": "string",
+      "title": "Card Type",
+      "description": "regular | interim card | reciprocal health care",
+      "enum": [
+        "regular",
+        "interim card",
+        "reciprocal health care"
+      ],
+      "required": true
+    },
     "medicare_card_number": {
       "type": "string",
       "title": "Card Number",
-      "description": "Unique Medicare card number",
+      "description": "10-digit card number as shown on the front of the Medicare card e.g. 1234 56789 1",
       "required": true
     },
-
-    "medicare_card_first_name": {
-      "type": "string",
-      "title": "First Name",
-      "description": "Card holder first name",
-      "required": true
+    "cardholders": {
+      "type": "array",
+      "title": "Cardholders",
+      "description": "1 to 5 cardholders listed on the card",
+      "required": true,
+      "minItems": 1,
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "integer",
+            "title": "Position",
+            "description": "Single digit position number shown to the left of the name on the Medicare card (e.g. 1)",
+            "required": true
+          },
+          "first_name": {
+            "type": "string",
+            "title": "First Name",
+            "description": "First name/Given name as shown on the name line of the Medicare card",
+            "required": true
+          },
+          "middle_initial": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "title": "Middle Initial",
+            "description": "Middle name or initial as shown on the name line of the Medicare card (may appear as a single initial e.g. A)",
+            "required": false
+          },
+          "last_name": {
+            "type": "string",
+            "title": "Last Name",
+            "description": "Last name/Family name/Surname as shown on the name line of the Medicare card",
+            "required": true
+          },
+          "full_name": {
+            "type": "string",
+            "title": "Full Name",
+            "description": "Full name as shown on the name line of the Medicare card, position + first name + middle initial + last name (e.g. 1 JOHN A SMITH)",
+            "required": true
+          }
+        }
+      }
     },
-
-    "medicare_card_last_name": {
-      "type": "string",
-      "title": "Last Name",
-      "description": "Card holder last name",
-      "required": true
-    },
-
     "medicare_card_expiry_date": {
       "type": "string",
       "title": "Expiry Date",
-      "description": "Medicare card expiration date",
+      "description": "Expiry month and year as shown on the Medicare card (MM/YYYY or DD/MM/YYYY)",
       "required": true
     },
-
-    "medicare_card_position": {
-      "type": "string",
-      "title": "Reference Position",
-      "description": "Individual reference number position on the card",
-      "required": true
-    },
-
-    "document_front": {
+    "secondary_document_front": {
       "type": "array",
-      "title": "Medicare Front Image",
-      "description": "Front side image of the Medicare card",
-      "items": {
-        "type": "string"
-      },
+      "title": "Document Front Photo",
+      "description": "Photo of the front of the Medicare card",
       "required": true
     },
-
-    "document_back": {
+    "secondary_document_back": {
       "type": "array",
-      "title": "Medicare Back Image",
-      "description": "Back side image of the Medicare card",
-      "items": {
-        "type": "string"
-      },
+      "title": "Document Back Photo",
+      "description": "Photo of the back of the Medicare card",
       "required": false
     }
   }
@@ -541,63 +571,52 @@ It is commonly required for:
 
 ```json
 {
-  "title": "Working With Children (WWC) Card",
-  "description": "Structured extraction schema for Working With Children clearance cards",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Victoria Working With Children Check Card",
+  "description": "Victoria WWC card",
   "type": "object",
   "properties": {
+    "document_type": {
+      "type": "string",
+      "title": "Document Type",
+      "description": "Always AUS_WWC_CARD",
+      "required": true
+    },
     "wwc_first_name": {
       "type": "string",
       "title": "First Name",
-      "description": "WWC card holder first name",
+      "description": "First and middle names of the cardholder",
       "required": true
     },
-
     "wwc_last_name": {
       "type": "string",
       "title": "Last Name",
-      "description": "WWC card holder last name",
+      "description": "Last name of the cardholder",
       "required": true
     },
-
     "wwc_card_number": {
       "type": "string",
-      "title": "WWC Card Number",
-      "description": "Unique Working With Children card number",
+      "title": "Card Number",
+      "description": "WWC card identification number",
       "required": true
     },
-
     "wwc_expiry_date": {
       "type": "string",
       "title": "Expiry Date",
-      "description": "WWC card expiration date",
+      "description": "Expiration date of the card (Format: DD-MM-YYYY)",
       "required": true
     },
-
-    "wwc_state": {
+    "wwc_type": {
       "type": "string",
-      "title": "Issuing State",
-      "description": "State issuing the WWC card",
+      "title": "Card Type",
+      "description": "Card classification (EMPLOYEE or VOLUNTEER)",
       "required": true
     },
-
-    "document_front": {
-      "type": "array",
-      "title": "WWC Front Image",
-      "description": "Front side image of the WWC card",
-      "items": {
-        "type": "string"
-      },
+    "wwc_issuing_state": {
+      "type": "string",
+      "title": "State",
+      "description": "Issuing state of the card",
       "required": true
-    },
-
-    "document_back": {
-      "type": "array",
-      "title": "WWC Back Image",
-      "description": "Back side image of the WWC card",
-      "items": {
-        "type": "string"
-      },
-      "required": false
     }
   }
 }
@@ -958,120 +977,207 @@ Because of this:
 
 ```json
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Australian Energy Bill",
   "type": "object",
   "properties": {
+
     "document_type": {
       "type": "string",
       "title": "Document Type",
-      "description": "Always ENERGY_BILL.",
+      "description": "Always AUS_ELECTRICITY_BILL.",
+      "enum": ["AUS_ELECTRICITY_BILL"],
       "required": true
     },
-    "energy_bill_type": {
-      "type": "string",
-      "title": "Energy Type",
-      "description": "Type of energy supply as shown on the bill (e.g., 'electricity', 'gas', 'dual').",
-      "enum": ["electricity", "gas", "dual"],
-      "required": true
-    },
-    "energy_bill_provider_name": {
+
+    "provider_name": {
       "type": "string",
       "title": "Provider Name",
-      "description": "Trading name of the energy provider (e.g., 'EnergyAustralia').",
+      "description": "Trading name of the energy retailer as shown on the bill (e.g. 'AGL', 'EnergyAustralia').",
       "required": true
     },
-    "energy_bill_provider_abn": {
+
+    "provider_abn": {
       "type": ["string", "null"],
       "title": "Provider ABN",
-      "description": "Australian Business Number of the energy provider (e.g., '99 086 014 968').",
+      "description": "Australian Business Number of the energy retailer (e.g. '11 222 333 444').",
       "required": false
     },
-    "energy_bill_account_holder_name": {
+
+    "account_holder_name": {
       "type": "string",
       "title": "Account Holder Name",
-      "description": "Full name of the account holder as shown on the bill (e.g., 'Miss S Sample').",
+      "description": "Full name of the account holder as shown on the bill (e.g. 'Jane Citizen').",
       "required": true
     },
-    "energy_bill_account_number": {
-      "type": "string",
-      "title": "Account Number",
-      "description": "Customer account number as shown on the bill (e.g., '1234 567 890').",
-      "required": true
-    },
-    "energy_bill_nmi": {
+
+    "account_number": {
       "type": ["string", "null"],
-      "title": "National Metering Identifier (NMI)",
-      "description": "10-character electricity meter identifier assigned to the supply point (e.g., '1234567890'). Electricity only.",
+      "title": "Account Number",
+      "description": "Customer account number as shown on the bill (e.g. '123456').",
       "required": false
     },
-    "energy_bill_mirn": {
+
+    "nmi": {
+      "type": ["string", "null"],
+      "title": "National Metering Identifier (NMI)",
+      "description": "10-digit electricity meter identifier (e.g. '0123456789'). Electricity only.",
+      "required": false
+    },
+
+    "mirn": {
       "type": ["string", "null"],
       "title": "Meter Installation Reference Number (MIRN)",
       "description": "Gas meter identifier assigned to the supply point. Gas or dual only.",
       "required": false
     },
-    "energy_bill_service_address": {
-      "type": "object",
-      "title": "Service Address",
-      "description": "Physical supply address used for Proof of Address verification.",
-      "required": true,
-      "properties": {
-        "street": {
-          "type": "string",
-          "title": "Street",
-          "description": "Street number and name (e.g., '37 Sample Road').",
-          "required": true
-        },
-        "suburb": {
-          "type": "string",
-          "title": "Suburb",
-          "description": "Suburb or locality (e.g., 'SAMPLE SUBURB').",
-          "required": true
-        },
-        "state": {
-          "type": "string",
-          "title": "State",
-          "description": "Australian state or territory abbreviation (e.g., 'VIC').",
-          "required": true
-        },
-        "postcode": {
-          "type": "string",
-          "title": "Postcode",
-          "description": "4-digit Australian postcode (e.g., '3000').",
-          "required": true
-        }
-      }
-    },
-    "energy_bill_issue_date": {
+
+    "service_address_street": {
       "type": "string",
-      "format": "date",
+      "title": "Service Address - Street",
+      "description": "Street number and name of the supply address (e.g. '1 Street Road').",
+      "required": true
+    },
+
+    "service_address_suburb": {
+      "type": "string",
+      "title": "Service Address - Suburb",
+      "description": "Suburb or locality of the supply address (e.g. 'ANYTOWN').",
+      "required": true
+    },
+
+    "service_address_state": {
+      "type": "string",
+      "title": "Service Address - State",
+      "description": "Australian state or territory abbreviation (e.g. 'VIC').",
+      "enum": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+      "required": true
+    },
+
+    "service_address_postcode": {
+      "type": "string",
+      "title": "Service Address - Postcode",
+      "description": "4-digit Australian postcode (e.g. '0000').",
+      "required": true
+    },
+
+    "bill_issue_date": {
+      "type": ["string", "null"],
       "title": "Bill Issue Date",
-      "description": "Date the bill was issued (YYYY-MM-DD), used to verify document recency (e.g., '2023-08-04').",
-      "required": true
-    },
-    "energy_bill_due_date": {
-      "type": "string",
+      "description": "Date the bill was issued (YYYY-MM-DD) (e.g. '2022-04-01').",
       "format": "date",
+      "required": false
+    },
+
+    "bill_due_date": {
+      "type": ["string", "null"],
       "title": "Bill Due Date",
-      "description": "Payment due date (YYYY-MM-DD), used to confirm document validity (e.g., '2023-08-21').",
+      "description": "Payment due date (YYYY-MM-DD) (e.g. '2022-04-27').",
+      "format": "date",
+      "required": false
+    },
+
+    "billing_period_start": {
+      "type": "string",
+      "title": "Billing Period Start",
+      "description": "Start date of the billing period (YYYY-MM-DD) (e.g. '2022-03-01').",
+      "format": "date",
       "required": true
     },
-    "energy_bill_total_amount_due": {
+
+    "billing_period_end": {
+      "type": "string",
+      "title": "Billing Period End",
+      "description": "End date of the billing period (YYYY-MM-DD) (e.g. '2022-03-31').",
+      "format": "date",
+      "required": true
+    },
+
+    "electricity_kwh": {
+      "type": ["number", "null"],
+      "title": "Electricity Usage (kWh)",
+      "description": "Total electricity consumed in the billing period in kWh (e.g. 567.0). Electricity only.",
+      "required": false
+    },
+
+    "average_daily_usage_kwh": {
+    "type": ["number", "null"],
+    "title": "Average Daily Usage",
+    "description": "Average daily energy usage as printed on the bill (e.g. 31.66 kWh/day). Directly readable by OCR.",
+    "required": false
+    },
+    "previous_balance": {
       "type": "number",
-      "title": "Total Amount Due (AUD)",
-      "description": "Total amount payable in AUD as shown on the bill (e.g., 538.77).",
+      "title": "Previous Balance",
+      "description": "Opening balance carried forward from previous bill in AUD (e.g. 114.87).",
       "required": true
     },
-    "document_front": {
+
+    "payments_received": {
+      "type": "number",
+      "title": "Payments Received",
+      "description": "Total payments received since last bill in AUD (e.g. 35.00).",
+      "required": true
+    },
+
+    "supply_charge": {
+      "type": ["number", "null"],
+      "title": "Supply Charge",
+      "description": "Fixed daily supply or connection charge for the billing period in AUD (e.g. 31.62).",
+      "required": false
+    },
+
+    "usage_charges": {
+      "type": "number",
+      "title": "Usage Charges",
+      "description": "Total energy usage charges before discounts and credits in AUD (e.g. 156.11).",
+      "required": true
+    },
+
+    "solar_feed_in_credit": {
+      "type": ["number", "null"],
+      "title": "Solar Feed-in Credit",
+      "description": "Credit from solar energy exported to the grid in AUD (e.g. 41.67). Null if no solar.",
+      "required": false
+    },
+
+    "concession": {
+      "type": ["number", "null"],
+      "title": "Government Concession / Rebate",
+      "description": "Government energy rebate or concession applied to the bill in AUD (e.g. 24.20). Null if none.",
+      "required": false
+    },
+
+    "total_discount": {
+      "type": ["number", "null"],
+      "title": "Total Discounts",
+      "description": "Total retailer discounts applied (usage discount, pay-on-time, etc.) in AUD (e.g. 25.76). Null if none.",
+      "required": false
+    },
+
+    "gst": {
+      "type": "number",
+      "title": "GST",
+      "description": "GST component of the total bill amount in AUD (e.g. 18.77).",
+      "required": true
+    },
+
+    "amount_due": {
+      "type": "number",
+      "title": "Amount Due",
+      "description": "Total amount payable including GST in AUD (e.g. 79.87).",
+      "required": true
+    },
+
+    "document_pages": {
       "type": "array",
-      "title": "Bill Page Images",
-      "description": "List of file paths for the original bill page images, in page order.",
+      "title": "Document Pages",
+      "description": "Ordered list of image file paths for each page of the bill.",
       "required": true,
       "items": {
         "type": "string",
-        "title": "Image Path",
-        "description": "File path of each bill page image (e.g., 'images/energy_bill_page001.png').",
-        "required": true
+        "title": "Page Image Path",
+        "description": "Relative file path to a bill page image (e.g. 'aus_energy_bill_00001_page1.png')."
       }
     }
   }

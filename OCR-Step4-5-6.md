@@ -18,7 +18,9 @@
   [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx)
   
 
-*Model*: Qwen2-VL-2B-Instruct
+*Model*: [Qwen2-VL-2B-Instruct](https://huggingface.co/Qwen/Qwen2-VL-2B-Instruct)
+
+![qwen2-vl](img/qwen2_vl.jpg)
 
 
 *Framework*: swift
@@ -123,6 +125,7 @@ return {
 Such as:
 
 ```
+  {
     "messages": [
       {
         "role": "system",
@@ -130,15 +133,15 @@ Such as:
       },
       {
         "role": "user",
-        "content": "Document: <image>\nProcess all document pages and extract the following information in JSON format: document_type, australian_passport_number, australian_passport_last_name, australian_passport_first_name, australian_passport_nationality, australian_passport_date_of_birth, australian_passport_gender, australian_passport_date_of_issue, australian_passport_expiry_date, australian_passport_place_of_birth, australian_passport_authority, australian_passport_mrz_line1, australian_passport_mrz_line2"
+        "content": "Document: <image>\nExtract the following fields as JSON: document_type, issuing_country, document_number, family_name, given_names, nationality, date_of_birth, sex, date_of_issue, date_of_expiry, place_of_birth, authority, mrz_line1, mrz_line2"
       },
       {
         "role": "assistant",
-        "content": "{\"document_type\": \"AUS_PASSPORT\", \"australian_passport_number\": \"SP2450814\", \"australian_passport_last_name\": \"GRANT\", \"australian_passport_first_name\": \"KEITH\", \"australian_passport_nationality\": \"AUSTRALIAN\", \"australian_passport_date_of_birth\": \"1992-01-09\", \"australian_passport_gender\": \"M\", \"australian_passport_date_of_issue\": \"2012-03-03\", \"australian_passport_expiry_date\": \"2022-03-03\", \"australian_passport_place_of_birth\": \"NE JANDON\", \"australian_passport_authority\": \"CANBERRA\", \"australian_passport_mrz_line1\": \"P<AUSGRANT<<KEITH<<<<<<<<<<<<<<<<<<<<<<<<<<<\", \"australian_passport_mrz_line2\": \"SP2450814<AUS920109M291023<<<<<<<<<<<<<<<<09\"}"
+        "content": "{\"document_type\": \"AUS_PASSPORT\", \"issuing_country\": \"AUS\", \"document_number\": \"HB5437923\", \"family_name\": \"BALDWIN\", \"given_names\": \"KIMBERLY\", \"nationality\": \"KUMARELIAN\", \"date_of_birth\": \"1997-05-07\", \"sex\": \"F\", \"date_of_issue\": \"2012-03-04\", \"date_of_expiry\": \"2029-08-09\", \"place_of_birth\": \"ANELCCHSER\", \"authority\": \"CANEHERA\", \"mrz_line1\": \"P<AUSBALDWIN<<KIMBERLY<<<<<<<<<<<<<<<<<<<<<<\", \"mrz_line2\": \"CJ1423646<AUS970507F290829<<<<<<<<<<<<<<<<01\"}"
       }
     ],
     "images": [
-      "/content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/data/swift_dataset/images/aus_passport_00012.png"
+      "/content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/data/swift_dataset/images/aus_passport_00010.png"
     ]
   },
   
@@ -209,26 +212,25 @@ Such as:
 
 --> Run:
 ```
-[INFO:swift] model_parameter_info: PeftModelForCausalLM: 2218.2180M Params (9.2324M Trainable [0.4162%]), 0.0001M Buffers.
-[INFO:swift] use_reentrant: True
-[INFO:swift] The logging file will be saved in: /content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/models/finetune/v6-20260528-021630/logging.jsonl
-[INFO:swift] Successfully registered post_encode hook: ['PeftModelForCausalLM'].
-[transformers] The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'eos_token_id': 151645, 'bos_token_id': None, 'pad_token_id': 151643}.
 Train:   0%|          | 0/60 [00:00<?, ?it/s][INFO:swift] use_logits_to_keep: True
-Train:   2%|▏         | 1/60 [00:42<41:47, 42.51s/it]{'loss': '0.3713', 'grad_norm': '0.8901', 'learning_rate': '3.333e-05', 'token_acc': '0.921', 'epoch': '0.08602', 'global_step/max_steps': '1/60', 'elapsed_time': '43s', 'remaining_time': '41m 48s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '42.51'}
-Train:   8%|▊         | 5/60 [03:52<43:40, 47.64s/it]{'loss': '0.2992', 'grad_norm': '0.6541', 'learning_rate': '9.97e-05', 'token_acc': '0.9285', 'epoch': '0.4301', 'global_step/max_steps': '5/60', 'elapsed_time': '3m 53s', 'remaining_time': '42m 43s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '46.6'}
-Train:  17%|█▋        | 10/60 [07:55<40:14, 48.30s/it]{'loss': '0.1605', 'grad_norm': '0.4602', 'learning_rate': '9.632e-05', 'token_acc': '0.9575', 'epoch': '0.8602', 'global_step/max_steps': '10/60', 'elapsed_time': '7m 56s', 'remaining_time': '39m 38s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '47.56'}
-Train:  25%|██▌       | 15/60 [11:27<33:24, 44.53s/it]{'loss': '0.08331', 'grad_norm': '0.3851', 'learning_rate': '8.946e-05', 'token_acc': '0.9808', 'epoch': '1.258', 'global_step/max_steps': '15/60', 'elapsed_time': '11m 28s', 'remaining_time': '34m 24s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.86'}
-Train:  33%|███▎      | 20/60 [15:20<30:25, 45.63s/it]{'loss': '0.06889', 'grad_norm': '0.494', 'learning_rate': '7.961e-05', 'token_acc': '0.9834', 'epoch': '1.688', 'global_step/max_steps': '20/60', 'elapsed_time': '15m 20s', 'remaining_time': '30m 41s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '46.01'}
-Train:  42%|████▏     | 25/60 [18:57<24:59, 42.84s/it]{'loss': '0.05346', 'grad_norm': '0.2599', 'learning_rate': '6.753e-05', 'token_acc': '0.9874', 'epoch': '2.086', 'global_step/max_steps': '25/60', 'elapsed_time': '18m 58s', 'remaining_time': '26m 33s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.51'}
-Train:  50%|█████     | 30/60 [22:49<22:48, 45.60s/it]{'loss': '0.02927', 'grad_norm': '0.1722', 'learning_rate': '5.413e-05', 'token_acc': '0.9924', 'epoch': '2.516', 'global_step/max_steps': '30/60', 'elapsed_time': '22m 50s', 'remaining_time': '22m 50s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.66'}
-Train:  58%|█████▊    | 35/60 [26:42<19:20, 46.42s/it]{'loss': '0.03943', 'grad_norm': '0.2415', 'learning_rate': '4.041e-05', 'token_acc': '0.99', 'epoch': '2.946', 'global_step/max_steps': '35/60', 'elapsed_time': '26m 43s', 'remaining_time': '19m 5s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.79'}
-Train:  67%|██████▋   | 40/60 [30:21<15:21, 46.09s/it]{'loss': '0.01985', 'grad_norm': '0.2619', 'learning_rate': '2.742e-05', 'token_acc': '0.9944', 'epoch': '3.344', 'global_step/max_steps': '40/60', 'elapsed_time': '30m 21s', 'remaining_time': '15m 11s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.53'}
-Train:  75%|███████▌  | 45/60 [34:08<11:23, 45.57s/it]{'loss': '0.02995', 'grad_norm': '0.2408', 'learning_rate': '1.614e-05', 'token_acc': '0.9925', 'epoch': '3.774', 'global_step/max_steps': '45/60', 'elapsed_time': '34m 8s', 'remaining_time': '11m 23s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.52'}
-Train:  83%|████████▎ | 50/60 [37:45<07:18, 43.90s/it]{'loss': '0.03346', 'grad_norm': '0.1691', 'learning_rate': '7.4e-06', 'token_acc': '0.9909', 'epoch': '4.172', 'global_step/max_steps': '50/60', 'elapsed_time': '37m 45s', 'remaining_time': '7m 33s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.3'}
+Train:   2%|▏         | 1/60 [00:55<54:36, 55.53s/it]{'loss': '0.6647', 'grad_norm': '0.8371', 'learning_rate': '3.333e-05', 'token_acc': '0.8539', 'epoch': '0.08421', 'global_step/max_steps': '1/60', 'elapsed_time': '56s', 'remaining_time': '54m 37s', 'memory(GiB)': '14.34', 'train_speed(s/it)': '55.54'}
+Train:   8%|▊         | 5/60 [04:14<46:25, 50.65s/it]{'loss': '0.6151', 'grad_norm': '0.6511', 'learning_rate': '9.97e-05', 'token_acc': '0.8669', 'epoch': '0.4211', 'global_step/max_steps': '5/60', 'elapsed_time': '4m 14s', 'remaining_time': '46m 35s', 'memory(GiB)': '14.34', 'train_speed(s/it)': '50.81'}
+Train:  17%|█▋        | 10/60 [08:27<43:03, 51.66s/it]{'loss': '0.446', 'grad_norm': '0.6618', 'learning_rate': '9.632e-05', 'token_acc': '0.8929', 'epoch': '0.8421', 'global_step/max_steps': '10/60', 'elapsed_time': '8m 27s', 'remaining_time': '42m 17s', 'memory(GiB)': '14.34', 'train_speed(s/it)': '50.74'}
+Train:  20%|██        | 12/60 [10:03<39:41, 49.61s/it]
+Train:  25%|██▌       | 15/60 [12:53<39:29, 52.65s/it]{'loss': '0.2692', 'grad_norm': '0.4791', 'learning_rate': '8.946e-05', 'token_acc': '0.9388', 'epoch': '1.253', 'global_step/max_steps': '15/60', 'elapsed_time': '12m 53s', 'remaining_time': '38m 40s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.54'}
+Train:  33%|███▎      | 20/60 [17:01<33:38, 50.47s/it]{'loss': '0.1866', 'grad_norm': '0.6824', 'learning_rate': '7.961e-05', 'token_acc': '0.9535', 'epoch': '1.674', 'global_step/max_steps': '20/60', 'elapsed_time': '17m 1s', 'remaining_time': '34m 3s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.07'}
+Train:  42%|████▏     | 25/60 [21:22<31:20, 53.73s/it]{'loss': '0.1085', 'grad_norm': '0.3586', 'learning_rate': '6.753e-05', 'token_acc': '0.9717', 'epoch': '2.084', 'global_step/max_steps': '25/60', 'elapsed_time': '21m 22s', 'remaining_time': '29m 55s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.28'}
+Train:  50%|█████     | 30/60 [25:32<25:19, 50.66s/it]{'loss': '0.08856', 'grad_norm': '0.3673', 'learning_rate': '5.413e-05', 'token_acc': '0.9781', 'epoch': '2.505', 'global_step/max_steps': '30/60', 'elapsed_time': '25m 32s', 'remaining_time': '25m 32s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.07'}
+Train:  58%|█████▊    | 35/60 [29:38<20:32, 49.29s/it]{'loss': '0.08122', 'grad_norm': '0.5321', 'learning_rate': '4.041e-05', 'token_acc': '0.9772', 'epoch': '2.926', 'global_step/max_steps': '35/60', 'elapsed_time': '29m 39s', 'remaining_time': '21m 11s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '50.83'}
+Train:  67%|██████▋   | 40/60 [34:01<17:02, 51.12s/it]{'loss': '0.07087', 'grad_norm': '0.2541', 'learning_rate': '2.742e-05', 'token_acc': '0.9814', 'epoch': '3.337', 'global_step/max_steps': '40/60', 'elapsed_time': '34m 2s', 'remaining_time': '17m 1s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.05'}
+Train:  75%|███████▌  | 45/60 [38:13<12:27, 49.84s/it]{'loss': '0.05639', 'grad_norm': '0.5134', 'learning_rate': '1.614e-05', 'token_acc': '0.983', 'epoch': '3.758', 'global_step/max_steps': '45/60', 'elapsed_time': '38m 14s', 'remaining_time': '12m 45s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '50.98'}
+Train:  83%|████████▎ | 50/60 [42:39<08:56, 53.64s/it]{'loss': '0.06318', 'grad_norm': '0.3856', 'learning_rate': '7.4e-06', 'token_acc': '0.9821', 'epoch': '4.168', 'global_step/max_steps': '50/60', 'elapsed_time': '42m 40s', 'remaining_time': '8m 32s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.2'}
+Train:  92%|█████████▏| 55/60 [46:49<04:14, 50.81s/it]{'loss': '0.04668', 'grad_norm': '0.4049', 'learning_rate': '1.89e-06', 'token_acc': '0.987', 'epoch': '4.589', 'global_step/max_steps': '55/60', 'elapsed_time': '46m 50s', 'remaining_time': '4m 15s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.08'}
+Train: 100%|██████████| 60/60 [50:53<00:00, 47.92s/it]{'loss': '0.05729', 'grad_norm': '0.5419', 'learning_rate': '0', 'token_acc': '0.9833', 'epoch': '5', 'global_step/max_steps': '60/60', 'elapsed_time': '50m 53s', 'remaining_time': '0s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '50.89'}
+
 
 Val: 100%|██████████| 8/8 [00:15<00:00,  1.91s/it]
-{'eval_loss': '0.03461', 'eval_runtime': '18.36', 'eval_samples_per_second': '0.436', 'eval_steps_per_second': '0.436', 'eval_token_acc': '0.99', 'epoch': '4.172', 'global_step/max_steps': '50/60', 'elapsed_time': '38m 4s', 'remaining_time': '7m 37s', 'memory(GiB)': '14.3', 'train_speed(s/it)': '45.67'}
+{'eval_loss': '0.03952', 'eval_runtime': '18.44', 'eval_samples_per_second': '0.434', 'eval_steps_per_second': '0.434', 'eval_token_acc': '0.9796', 'epoch': '5', 'global_step/max_steps': '60/60', 'elapsed_time': '51m 32s', 'remaining_time': '0s', 'memory(GiB)': '14.4', 'train_speed(s/it)': '51.53'}
 
 
 ```
@@ -248,44 +250,47 @@ infer_argv = [
 
 infer_main(infer_argv)
 
+INPUT:
 
-<<< <<image>>. extract follow json output:...
-{
-  "document_type": "",
-  "issuing_country": "",
-  "document_number": "",
-  "family_name": "",
-  "given_names": "",
-  "nationality": "",
-  "date_of_birth": "",
-  "sex": "F",
-  "date_of_issue": "",
-  "date_of_expiry": "",
-  "place_of_birth": "",
-  "authority": "",
-  "mrz_line1": "",
-  "mrz_line2": ""
+<<< extract data from <<image>> with format json 
+{   "document_type": "",
+    "issuing_country": "", 
+    "document_number": "", 
+    "family_name": "",  
+    "given_names": "",  
+    "nationality": "",  
+    "date_of_birth": "",   
+    "sex": "F",  
+    "date_of_issue": "",  
+    "date_of_expiry": "",  
+    "place_of_birth": "",  
+    "authority": "",  
+    "mrz_line1": "",  
+    "mrz_line2": "" 
 }
 
-Input an image path or URL <<< /content/template.jpg
+Input an image path or URL <<< /content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/data/swift_dataset/images/aus_passport_00010.png
+
+OUTPUT:
 
 {
     "document_type": "AUS_PASSPORT", 
-    "issuing_country": "AUSTRALIA", 
-    "document_number": "J8962842", 
-    "family_name": "NICHOLAS",
-    "given_names": "MICHAEL", 
-    "nationality": "AUSTRALIAN",
-    "date_of_birth": "1996-03-05", 
+    "issuing_country": "AUS",
+    "document_number": "HB5437923",
+    "family_name": "BALDWIN", 
+    "given_names": "KIMBERLY", 
+    "nationality": "KUMARELIAN",
+    "date_of_birth": "1997-05-07", 
     "sex": "F", 
-    "date_of_issue": "2025-01-23", 
-    "date_of_expiry": "2035-01-23", 
-    "place_of_birth": "LONDON", 
-    "authority": "AUSTRALIAN", 
-    "mrz_line1": "P<AUSFIGUEROA<MICHAEL<NICHOLAS<<<<<<<<<<<<<<<<<<<<<<<<<<<         J8962842<6AUS9603057M3501232<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<00",
-    "mrz_line2": ""}
-```
---> Have wrong.
+    "date_of_issue": "2012-03-04",
+    "date_of_expiry": "2029-09-08",
+    "place_of_birth": "CANEHERA",
+    "authority": "CANBERRA", 
+    "mrz_line1": "P<AUSBALDWIN<<KIMBERLY<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+    "mrz_line2": "CJ1423646<AUS970507F290829<<<<<<<<<<<<<<<<01"
+}
+
+--> There are some wrong with mrz.
 
 # 05 - Evalution
 ![Evalution](img/evalution/evalution-model.png)
@@ -297,23 +302,23 @@ Input an image path or URL <<< /content/template.jpg
 
 Update later...
 
-<!-- ![driver-license](img/evalution/aus_driver_license_vic_00004.png)
+# ![driver-license](img/evalution/aus_driver_license_vic_00004.png)
 
-| | Field | Ground Truth | Prediction |
-|:---:|:---|:---|:---|
-| ✓ | address | UNIT 82 | UNIT 82 |
-| ✓ | card number | D3409784 | D3409784 |
-| ✓ | class | CAR | CAR |
-| ✓ | date of birth | 1987-07-07 | 1987-07-07 |
-| ✓ | expiry date | 2029-10-18 | 2029-10-18 |
-| ✓ | first name | DANIEL | DANIEL |
-| ✓ | last name | FOWLER | FOWLER |
-| ✓ | licence number | 822170556 | 822170556 |
-| ✓ | middle name | None | None |
-| ✓ | state | VIC | VIC |
-| ✓ | document type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
+# | | Field | Ground Truth | Prediction |
+# |:---:|:---|:---|:---|
+# | ✓ | address | UNIT 82 | UNIT 82 |
+# | ✓ | card number | D3409784 | D3409784 |
+# | ✓ | class | CAR | CAR |
+# | ✓ | date of birth | 1987-07-07 | 1987-07-07 |
+# | ✓ | expiry date | 2029-10-18 | 2029-10-18 |
+# | ✓ | first name | DANIEL | DANIEL |
+# | ✓ | last name | FOWLER | FOWLER |
+# | ✓ | licence number | 822170556 | 822170556 |
+# | ✓ | middle name | None | None |
+# | ✓ | state | VIC | VIC |
+# | ✓ | document type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
 
-**11/11 fields correct** -->
+# **11/11 fields correct** 
 
 ---
 
@@ -347,8 +352,8 @@ Update later...
 
 ![green_medicare](img/evalution/aus_medicare_card_green_00016.png)
 
-| | Field | Ground Truth | Prediction |
-|:---:|:---|:---|:---|
+| Status | Field | Ground Truth | Prediction |
+| :---: | :--- | :--- | :--- |
 | ✓ | cardholders | `[{pos:1, FERNANDO R MOORE}]` | `[{pos:1, FERNANDO R MOORE}]` |
 | ✓ | document type | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
 | ✓ | expiry date | 2020-07-29 | 2020-07-29 |
@@ -356,92 +361,14 @@ Update later...
 | ✓ | card type | regular | regular |
 
 **5/5 fields correct**
+
 ### Multiple members
 
 ![yellow-medicare](img/evalution/aus_medicare_card_yellow_00023.png)
 
 | Status | Field | Ground Truth | Prediction |
-|:---:|---|---|---|
-| ✓ | `cardholders` | ```json
-[
-  {
-    "position": 1,
-    "first_name": "MARY",
-    "middle_initial": null,
-    "last_name": "WOODS",
-    "full_name": "1 MARY WOODS"
-  },
-  {
-    "position": 2,
-    "first_name": "TOMMY",
-    "middle_initial": null,
-    "last_name": "DURAN",
-    "full_name": "2 TOMMY DURAN"
-  },
-  {
-    "position": 3,
-    "first_name": "PAUL",
-    "middle_initial": null,
-    "last_name": "JACKSON",
-    "full_name": "3 PAUL JACKSON"
-  },
-  {
-    "position": 4,
-    "first_name": "CHRISTINA",
-    "middle_initial": null,
-    "last_name": "CARLSON",
-    "full_name": "4 CHRISTINA CARLSON"
-  },
-  {
-    "position": 5,
-    "first_name": "JAMES",
-    "middle_initial": "R",
-    "last_name": "LOPEZ",
-    "full_name": "5 JAMES R LOPEZ"
-  }
-]
-``` | ```json
-[
-  {
-    "position": 1,
-    "first_name": "MARY",
-    "middle_initial": null,
-    "last_name": "WOODS",
-    "full_name": "1 MARY WOODS"
-  },
-  {
-    "position": 2,
-    "first_name": "TOMMY",
-    "middle_initial": null,
-    "last_name": "DURAN",
-    "full_name": "2 TOMMY DURAN"
-  },
-  {
-    "position": 3,
-    "first_name": "PAUL",
-    "middle_initial": null,
-    "last_name": "JACKSON",
-    "full_name": "3 PAUL JACKSON"
-  },
-  {
-    "position": 4,
-    "first_name": "CHRISTINA",
-    "middle_initial": null,
-    "last_name": "CARLSON",
-    "full_name": "4 CHRISTINA CARLSON"
-  },
-  {
-    "position": 5,
-    "first_name": "JAMES",
-    "middle_initial": "R",
-    "last_name": "LOPEZ",
-    "full_name": "5 JAMES R LOPEZ"
-  }
-]
-``` |
-
-| Status | Field | Ground Truth | Prediction |
-|:---:|---|---|---|
+| :---: | :--- | :--- | :--- |
+| ✓ | `cardholders` | `[{"position": 1, "first_name": "MARY", "middle_initial": null, "last_name": "WOODS", "full_name": "1 MARY WOODS"}, {"position": 2, "first_name": "TOMMY", "middle_initial": null, "last_name": "DURAN", "full_name": "2 TOMMY DURAN"}, {"position": 3, "first_name": "PAUL", "middle_initial": null, "last_name": "JACKSON", "full_name": "3 PAUL JACKSON"}, {"position": 4, "first_name": "CHRISTINA", "middle_initial": null, "last_name": "CARLSON", "full_name": "4 CHRISTINA CARLSON"}, {"position": 5, "first_name": "JAMES", "middle_initial": "R", "last_name": "LOPEZ", "full_name": "5 JAMES R LOPEZ"}]` | `[{"position": 1, "first_name": "MARY", "middle_initial": null, "last_name": "WOODS", "full_name": "1 MARY WOODS"}, {"position": 2, "first_name": "TOMMY", "middle_initial": null, "last_name": "DURAN", "full_name": "2 TOMMY DURAN"}, {"position": 3, "first_name": "PAUL", "middle_initial": null, "last_name": "JACKSON", "full_name": "3 PAUL JACKSON"}, {"position": 4, "first_name": "CHRISTINA", "middle_initial": null, "last_name": "CARLSON", "full_name": "4 CHRISTINA CARLSON"}, {"position": 5, "first_name": "JAMES", "middle_initial": "R", "last_name": "LOPEZ", "full_name": "5 JAMES R LOPEZ"}]` |
 | ✓ | `document_type` | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
 | ✓ | `medicare_card_expiry_date` | 2030-11-07 | 2030-11-07 |
 | ✓ | `medicare_card_number` | 4293 36425 7 | 4293 36425 7 |
@@ -449,15 +376,14 @@ Update later...
 
 **5/5 fields correct**
 
-
 ---
 
 ## Working With Children (WWC) Card
 
 ![wwc](img/evalution/aus_wwc_card_vic_00007.png)
 
-| | Field | Ground Truth | Prediction |
-|:---:|:---|:---|:---|
+| Status | Field | Ground Truth | Prediction |
+| :---: | :--- | :--- | :--- |
 | ✓ | card number | 626067Z-52 | 626067Z-52 |
 | ✓ | expiry date | 2027-10-30 | 2027-10-30 |
 | ✓ | first name | JASON | JASON |

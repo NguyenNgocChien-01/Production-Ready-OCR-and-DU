@@ -54,12 +54,6 @@
       "required": false
     },
 
-    "mirn": {
-      "type": ["string", "null"],
-      "title": "Meter Installation Reference Number (MIRN)",
-      "description": "Gas meter identifier assigned to the supply point. Gas or dual only.",
-      "required": false
-    },
 
     "service_address_street": {
       "type": "string",
@@ -134,13 +128,6 @@
     "title": "Average Daily Usage",
     "description": "Average daily energy usage as printed on the bill (e.g. 31.66 kWh/day). Directly readable by OCR.",
     "required": false
-    },
-
-    "gas_mj": {
-      "type": ["number", "null"],
-      "title": "Gas Usage (MJ)",
-      "description": "Total gas consumed in the billing period in megajoules. Gas only.",
-      "required": false
     },
 
     "previous_balance": {
@@ -234,8 +221,7 @@
 
   "account_holder_name": "Thi Khoi Anh Phan",
   "account_number": "7095 004 987",
-  "nmi": "41029727986",
-  "mirn": null,
+  "nmi": "41029727986"
 
   "service_address_street": "2A Eyre Street",
   "service_address_suburb": "CHIFLEY",
@@ -251,7 +237,6 @@
   "electricity_kwh": null,
   "average_daily_usage_kwh": 31.66,
 
-  "gas_mj": null,
 
   "previous_balance": 853.83,
   "payments_received": 853.83,
