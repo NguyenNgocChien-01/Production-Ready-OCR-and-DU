@@ -14,16 +14,8 @@
     "document_type": {
       "type": "string",
       "title": "Document Type",
-      "description": "Always AUS_ENERGY_BILL.",
-      "enum": ["AUS_ENERGY_BILL"],
-      "required": true
-    },
-
-    "energy_type": {
-      "type": "string",
-      "title": "Energy Type",
-      "description": "Type of energy supplied (e.g. 'electricity', 'gas', 'dual').",
-      "enum": ["electricity", "gas", "dual"],
+      "description": "Always AUS_ELECTRICITY_BILL.",
+      "enum": ["AUS_ELECTRICITY_BILL"],
       "required": true
     },
 
@@ -235,8 +227,7 @@
 
 ```json
 {
-  "document_type": "AUS_ENERGY_BILL",
-  "energy_type": "electricity",
+  "document_type": "AUS_ELECTRICITY_BILL",
 
   "provider_name": "AGL",
   "provider_abn": "88 090 538 337",
