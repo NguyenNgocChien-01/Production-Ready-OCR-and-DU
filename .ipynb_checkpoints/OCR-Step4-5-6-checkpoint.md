@@ -46,9 +46,7 @@ data/
 # 02 -  Create Custom Dataset Swift Format
 <!-- (https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link) -->
 ## Goal: convert raw images and JSON labels into SWIFT training format.
-**1. Load data from local:** load_local_data(doc_dir, label_dir, skip_stems)
-Scans labels/ recursively for .json files. For each label finds the matching image (.jpg/.png/.pdf). Returns a list of records containing filename, doc_type, target_data, and doc_bytes.
-
+**1. Load data from local:**
 **2. Split data:** 
 
 - **If** *n_sample* < 3 ==> no split.
