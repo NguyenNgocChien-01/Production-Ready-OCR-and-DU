@@ -47,6 +47,8 @@ data/
 <!-- (https://drive.google.com/file/d/1BmtN3q8E-xjYm96ZBzOxnfXOVGZuIh8m/view?usp=drive_link) -->
 ## Goal: convert raw images and JSON labels into SWIFT training format.
 **1. Load data from local:**
+
+
 **2. Split data:** 
 
 - **If** *n_sample* < 3 ==> no split.
