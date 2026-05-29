@@ -293,7 +293,7 @@ Input an image path or URL <<< /content/template.jpg
 
 ## Result on test data
 - Vic driver license:
-![driver-license](ocr-project/img/evalution/aus_driver_license_vic_00004.png)
+![driver-license](img/evalution/aus_driver_license_vic_00004.png)
 
 | Status | Field | Ground Truth | Prediction |
 |---|---|---|---|
@@ -310,7 +310,7 @@ Input an image path or URL <<< /content/template.jpg
 | ✓ | document_type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
 
 - Passport:
-![passport](ocr-project/img/evalution/aus_passport_00018.png)
+![passport](img/evalution/aus_passport_00018.png)
 
 | Status | Field | Ground Truth | Prediction |
 |---|---|---|---|
@@ -333,7 +333,7 @@ Input an image path or URL <<< /content/template.jpg
 - Medicare card:
   - 1 member:
  
-    ![green_medicare](ocr-project/img/evalution/aus_medicare_card_green_00016.png)
+    ![green_medicare](img/evalution/aus_medicare_card_green_00016.png)
     
 | Status | Field | Ground Truth | Prediction |
 | :--- | :--- | :--- | :--- |
@@ -345,7 +345,7 @@ Input an image path or URL <<< /content/template.jpg
  
   - n members:
  
-    ![yellow-medicare](ocr-project/img/evalution/aus_medicare_card_yellow_00023.png)
+    ![yellow-medicare](img/evalution/aus_medicare_card_yellow_00023.png)
 
 | Status | Field | Ground Truth | Prediction |
 | :--- | :--- | :--- | :--- |
@@ -359,7 +359,7 @@ Input an image path or URL <<< /content/template.jpg
 
 - WWC
 
-![wwc](ocr-project/img/evalution/aus_wwc_card_vic_00007.png
+![wwc](img/evalution/aus_wwc_card_vic_00007.png
 
 | Status | Field | Ground Truth | Prediction |
 | :--- | :--- | :--- | :--- |
