@@ -292,9 +292,12 @@ Input an image path or URL <<< /content/template.jpg
 
 # Evaluation Results on Test Data
 
-<!-- ## Australian Driver License — VIC
+## Australian Driver License — VIC
 
-![driver-license](img/evalution/aus_driver_license_vic_00004.png)
+
+Update later...
+
+<!-- ![driver-license](img/evalution/aus_driver_license_vic_00004.png)
 
 | | Field | Ground Truth | Prediction |
 |:---:|:---|:---|:---|
@@ -310,9 +313,9 @@ Input an image path or URL <<< /content/template.jpg
 | ✓ | state | VIC | VIC |
 | ✓ | document type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
 
-**11/11 fields correct**
+**11/11 fields correct** -->
 
---- -->
+---
 
 ## Australian Passport
 
@@ -358,13 +361,92 @@ Input an image path or URL <<< /content/template.jpg
 
 ![yellow-medicare](img/evalution/aus_medicare_card_yellow_00023.png)
 
-| | Field | Ground Truth | Prediction |
-|:---:|:---|:---|:---|
-| ✓ | cardholders | 5 members (MARY WOODS, TOMMY DURAN, PAUL JACKSON, CHRISTINA CARLSON, JAMES R LOPEZ) | identical |
-| ✓ | document type | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
-| ✓ | expiry date | 2030-11-07 | 2030-11-07 |
-| ✓ | card number | 4293 36425 7 | 4293 36425 7 |
-| ✓ | card type | reciprocal health care | reciprocal health care |
+
+| Status | Field | Ground Truth | Prediction |
+|:---:|---|---|---|
+| ✓ | `cardholders` | ```json
+[
+  {
+    "position": 1,
+    "first_name": "MARY",
+    "middle_initial": null,
+    "last_name": "WOODS",
+    "full_name": "1 MARY WOODS"
+  },
+  {
+    "position": 2,
+    "first_name": "TOMMY",
+    "middle_initial": null,
+    "last_name": "DURAN",
+    "full_name": "2 TOMMY DURAN"
+  },
+  {
+    "position": 3,
+    "first_name": "PAUL",
+    "middle_initial": null,
+    "last_name": "JACKSON",
+    "full_name": "3 PAUL JACKSON"
+  },
+  {
+    "position": 4,
+    "first_name": "CHRISTINA",
+    "middle_initial": null,
+    "last_name": "CARLSON",
+    "full_name": "4 CHRISTINA CARLSON"
+  },
+  {
+    "position": 5,
+    "first_name": "JAMES",
+    "middle_initial": "R",
+    "last_name": "LOPEZ",
+    "full_name": "5 JAMES R LOPEZ"
+  }
+]
+``` | ```json
+[
+  {
+    "position": 1,
+    "first_name": "MARY",
+    "middle_initial": null,
+    "last_name": "WOODS",
+    "full_name": "1 MARY WOODS"
+  },
+  {
+    "position": 2,
+    "first_name": "TOMMY",
+    "middle_initial": null,
+    "last_name": "DURAN",
+    "full_name": "2 TOMMY DURAN"
+  },
+  {
+    "position": 3,
+    "first_name": "PAUL",
+    "middle_initial": null,
+    "last_name": "JACKSON",
+    "full_name": "3 PAUL JACKSON"
+  },
+  {
+    "position": 4,
+    "first_name": "CHRISTINA",
+    "middle_initial": null,
+    "last_name": "CARLSON",
+    "full_name": "4 CHRISTINA CARLSON"
+  },
+  {
+    "position": 5,
+    "first_name": "JAMES",
+    "middle_initial": "R",
+    "last_name": "LOPEZ",
+    "full_name": "5 JAMES R LOPEZ"
+  }
+]
+``` |
+| ✓ | `document_type` | `AUS_MEDICARE_CARD` | `AUS_MEDICARE_CARD` |
+| ✓ | `medicare_card_expiry_date` | `2030-11-07` | `2030-11-07` |
+| ✓ | `medicare_card_number` | `4293 36425 7` | `4293 36425 7` |
+| ✓ | `medicare_card_type` | `reciprocal health care` | `reciprocal health care` |
+
+```
 
 **5/5 fields correct**
 
@@ -391,7 +473,7 @@ Input an image path or URL <<< /content/template.jpg
 
 | Document | Correct | Total | Accuracy |
 |:---|:---:|:---:|:---:|
-| Driver License (VIC) | 11 | 11 | 100% |
+<!-- | Driver License (VIC) | 11 | 11 | 100% | -->
 | Passport | 12 | 13 | 92.3% |
 | Medicare (single) | 5 | 5 | 100% |
 | Medicare (multi) | 5 | 5 | 100% |
