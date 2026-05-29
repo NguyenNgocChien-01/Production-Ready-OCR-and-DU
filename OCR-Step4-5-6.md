@@ -1,21 +1,26 @@
 # Classify - Finetune
 
 - [Classify](#classify)
-- [Fine-tune](#Fine-Tuning-Report-Document-Information-Extraction)
-  - [01 - Dataset Preparation](#01-Dataset-Preparation)
-  - [02 -  Create Custom Dataset Swift Format](#02-Create-Custom-Dataset-Swift-Format)
-  - [03 - Fine-tune](#03-Fine-tune)
-  - [# 04 - Inference](#04-Inference)
+- [Fine-tune](#fine-tuning-report-document-information-extraction)
+  - [01 - Dataset Preparation](#01-dataset-preparation)
+  - [02 -  Create Custom Dataset Swift Format](#02-create-custom-dataset-swift-format)
+  - [03 - Fine-tune](#03-fine-tune)
+  - [04 - Inference](#04-inference)
 
 # Classify
-- For Step 4, I do not use standalone base models. Instead, I will use a fine-tuned Large Language Model for document classification. This LLM processes OCR text and spatial data simultaneously to output accurate labels.
-- 
+- For classify step , I do not use standalone base models. Instead, I will use a fine-tuned Large Language Model for document classification. This LLM processes OCR text and spatial data simultaneously to output accurate labels.
+
 # Fine-Tuning Report: Document Information Extraction
 - My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx)
   
-Model: Qwen2-VL-2B-Instruct
-Framework: swift
-Platform: Google Colab
+  
+*Model*: Qwen2-VL-2B-Instruc
+
+
+*Framework*: swift
+
+
+*Platform*: Google Colab
 
 # 01 - Dataset Preparation
 - I have used the data at [synthetic-doc-generator-data](https://github.com/NguyenNgocChien-01/synthetic-doc-generator/tree/main/dataset).
@@ -28,7 +33,7 @@ data/
 |──────aus_passport/
 |──────aus_medicare_card/green/, ...
 |
-└── labels/  (mirrors documents)
+└── labels/  (mirrors documents) ...
 ```
 
 - Now, I have ~20 image + json sample per passport, vic driver license, vic wwc, 3 type medicare card = ~ 100 sample.
@@ -44,7 +49,7 @@ Scans labels/ recursively for .json files. For each label finds the matching ima
 
 - **If** *n_sample* < 3 ==> no split.
 - **Else** ==> Stratified by doc type, 80% train / 10% dev / 10% test, random seed 42. Types with fewer than 3 samples go entirely to train.
-- 
+  
 ```text
 
 Distribution by document type:
@@ -92,7 +97,8 @@ aus_wwc_card/vic                               25     21      2      2
 swift_dataset/images/
 ├── bill_00001_page000.png 
 |── bill_00001_page001.png 
-└── passport_00001.png
+└── passport_00001.png ...
+
 ```
 
 - Normalizes field names using label_to_schema_mapping.json. Supports dot-notation for nested fields like person.name
