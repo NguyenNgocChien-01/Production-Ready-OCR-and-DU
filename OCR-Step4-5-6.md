@@ -288,7 +288,84 @@ Input an image path or URL <<< /content/template.jpg
 --> Have wrong.
 
 # 05 - Evalution
-![Evalution](img/evalution-model.png)
+![Evalution](img/evalution/evalution-model.png)
+
+
+## Result on test data
+- Vic driver license:
+![driver-license](ocr-project/img/evalution/aus_driver_license_vic_00004.png)
+
+| Status | Field | Ground Truth | Prediction |
+|---|---|---|---|
+| ✓ | australian_driver_license_address | UNIT 82 | UNIT 82 |
+| ✓ | australian_driver_license_card_number | D3409784 | D3409784 |
+| ✓ | australian_driver_license_class | CAR | CAR |
+| ✓ | australian_driver_license_dob | 1987-07-07 | 1987-07-07 |
+| ✓ | australian_driver_license_expiry_date | 2029-10-18 | 2029-10-18 |
+| ✓ | australian_driver_license_first_name | DANIEL | DANIEL |
+| ✓ | australian_driver_license_last_name | FOWLER | FOWLER |
+| ✓ | australian_driver_license_licence_number | 822170556 | 822170556 |
+| ✓ | australian_driver_license_middle_name | None | None |
+| ✓ | australian_driver_license_state | VIC | VIC |
+| ✓ | document_type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
+
+- Passport:
+![passport](ocr-project/img/evalution/aus_passport_00018.png)
+
+| Status | Field | Ground Truth | Prediction |
+|---|---|---|---|
+| ✓ | australian_passport_authority | CANBERRA | CANBERRA |
+| ✓ | australian_passport_date_of_birth | 1982-01-09 | 1982-01-09 |
+| ✓ | australian_passport_date_of_issue | 2012-03-03 | 2012-03-03 |
+| ✓ | australian_passport_expiry_date | 2022-03-03 | 2022-03-03 |
+| ✓ | australian_passport_first_name | KEITH | KEITH |
+| ✓ | australian_passport_gender | M | M |
+| ✓ | australian_passport_last_name | GRANT | GRANT |
+| ✗ | australian_passport_mrz_line1 | P<AUSGRANT<<KEITH<<<<<<<<<<<<<<<<<<<<<<<<<<< | P<AUSGRANT<<KEITH<<<<<<<<<<<<<<<<<<<<<<<<< |
+| ✓ | australian_passport_mrz_line2 | SP2450814<AUS920109M291023<<<<<<<<<<<<<<<<09 | SP2450814<AUS920109M291023<<<<<<<<<<<<<<<<09 |
+| ✓ | australian_passport_nationality | AUSTRALIAN | AUSTRALIAN |
+| ✓ | australian_passport_number | SP2450814 | SP2450814 |
+| ✓ | australian_passport_place_of_birth | NE JANDON | NE JANDON |
+| ✓ | document_type | AUS_PASSPORT | AUS_PASSPORT |
 
 
 
+- Medicare card:
+  - 1 member:
+ 
+    ![green_medicare](ocr-project/img/evalution/aus_medicare_card_green_00016.png)
+    
+| Status | Field | Ground Truth | Prediction |
+| :--- | :--- | :--- | :--- |
+| ✓ | cardholders | `[{'position': 1, 'first_name': 'FERNANDO', 'middle_initial': 'R', 'last_name': 'MOORE', 'full_name': '1 FERNANDO R MOORE'}]` | `[{'position': 1, 'first_name': 'FERNANDO', 'middle_initial': 'R', 'last_name': 'MOORE', 'full_name': '1 FERNANDO R MOORE'}]` |
+| ✓ | document_type | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
+| ✓ | medicare_card_expiry_date | 2020-07-29 | 2020-07-29 |
+| ✓ | medicare_card_number | 6406 75093 0 | 6406 75093 0 |
+| ✓ | medicare_card_type | regular | regular |
+ 
+  - n members:
+ 
+    ![yellow-medicare](ocr-project/img/evalution/aus_medicare_card_yellow_00023.png)
+
+| Status | Field | Ground Truth | Prediction |
+| :--- | :--- | :--- | :--- |
+| ✓ | cardholders | `[{'position': 1, 'first_name': 'MARY', 'middle_initial': None, 'last_name': 'WOODS', 'full_name': '1 MARY WOODS'}, {'position': 2, 'first_name': 'TOMMY', 'middle_initial': None, 'last_name': 'DURAN', 'full_name': '2 TOMMY DURAN'}, {'position': 3, 'first_name': 'PAUL', 'middle_initial': None, 'last_name': 'JACKSON', 'full_name': '3 PAUL JACKSON'}, {'position': 4, 'first_name': 'CHRISTINA', 'middle_initial': None, 'last_name': 'CARLSON', 'full_name': '4 CHRISTINA CARLSON'}, {'position': 5, 'first_name': 'JAMES', 'middle_initial': 'R', 'last_name': 'LOPEZ', 'full_name': '5 JAMES R LOPEZ'}]` | `[{'position': 1, 'first_name': 'MARY', 'middle_initial': None, 'last_name': 'WOODS', 'full_name': '1 MARY WOODS'}, {'position': 2, 'first_name': 'TOMMY', 'middle_initial': None, 'last_name': 'DURAN', 'full_name': '2 TOMMY DURAN'}, {'position': 3, 'first_name': 'PAUL', 'middle_initial': None, 'last_name': 'JACKSON', 'full_name': '3 PAUL JACKSON'}, {'position': 4, 'first_name': 'CHRISTINA', 'middle_initial': None, 'last_name': 'CARLSON', 'full_name': '4 CHRISTINA CARLSON'}, {'position': 5, 'first_name': 'JAMES', 'middle_initial': 'R', 'last_name': 'LOPEZ', 'full_name': '5 JAMES R LOPEZ'}]` |
+| ✓ | document_type | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
+| ✓ | medicare_card_expiry_date | 2030-11-07 | 2030-11-07 |
+| ✓ | medicare_card_number | 4293 36425 7 | 4293 36425 7 |
+| ✓ | medicare_card_type | reciprocal health care | reciprocal health care |
+ 
+
+
+- WWC
+
+![wwc](ocr-project/img/evalution/aus_wwc_card_vic_00007.png
+
+| Status | Field | Ground Truth | Prediction |
+| :--- | :--- | :--- | :--- |
+| ✓ | wwc_card_number | 626067Z-52 | 626067Z-52 |
+| ✓ | wwc_expiry_date | 2027-10-30 | 2027-10-30 |
+| ✓ | wwc_first_name | JASON | JASON |
+| ✓ | wwc_issuing_state | VIC | VIC |
+| ✓ | wwc_last_name | PHILLIPS | PHILLIPS |
+| ✓ | wwc_type | EMPLOYEE | EMPLOYEE |
