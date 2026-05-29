@@ -292,7 +292,7 @@ Input an image path or URL <<< /content/template.jpg
 
 # Evaluation Results on Test Data
 
-## Australian Driver License — VIC
+<!-- ## Australian Driver License — VIC
 
 ![driver-license](img/evalution/aus_driver_license_vic_00004.png)
 
@@ -312,7 +312,7 @@ Input an image path or URL <<< /content/template.jpg
 
 **11/11 fields correct**
 
----
+--- -->
 
 ## Australian Passport
 
