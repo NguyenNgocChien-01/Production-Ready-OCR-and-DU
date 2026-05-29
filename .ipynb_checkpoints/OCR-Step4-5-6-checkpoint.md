@@ -356,11 +356,9 @@ Update later...
 | ✓ | card type | regular | regular |
 
 **5/5 fields correct**
-
 ### Multiple members
 
 ![yellow-medicare](img/evalution/aus_medicare_card_yellow_00023.png)
-
 
 | Status | Field | Ground Truth | Prediction |
 |:---:|---|---|---|
@@ -441,14 +439,16 @@ Update later...
   }
 ]
 ``` |
-| ✓ | `document_type` | `AUS_MEDICARE_CARD` | `AUS_MEDICARE_CARD` |
-| ✓ | `medicare_card_expiry_date` | `2030-11-07` | `2030-11-07` |
-| ✓ | `medicare_card_number` | `4293 36425 7` | `4293 36425 7` |
-| ✓ | `medicare_card_type` | `reciprocal health care` | `reciprocal health care` |
 
-```
+| Status | Field | Ground Truth | Prediction |
+|:---:|---|---|---|
+| ✓ | `document_type` | AUS_MEDICARE_CARD | AUS_MEDICARE_CARD |
+| ✓ | `medicare_card_expiry_date` | 2030-11-07 | 2030-11-07 |
+| ✓ | `medicare_card_number` | 4293 36425 7 | 4293 36425 7 |
+| ✓ | `medicare_card_type` | reciprocal health care | reciprocal health care |
 
 **5/5 fields correct**
+
 
 ---
 
@@ -468,14 +468,3 @@ Update later...
 **6/6 fields correct**
 
 ---
-
-## Summary
-
-| Document | Correct | Total | Accuracy |
-|:---|:---:|:---:|:---:|
-<!-- | Driver License (VIC) | 11 | 11 | 100% | -->
-| Passport | 12 | 13 | 92.3% |
-| Medicare (single) | 5 | 5 | 100% |
-| Medicare (multi) | 5 | 5 | 100% |
-| WWC Card | 6 | 6 | 100% |
-| **Total** | **39** | **40** | **97.5%** |
