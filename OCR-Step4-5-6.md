@@ -1,20 +1,23 @@
 # Classify - Finetune
 
 - [Classify](#classify)
-- [Fine-tune](#fine-tuning-report-document-information-extraction)
-  - [01 - Dataset Preparation](#01-dataset-preparation)
-  - [02 -  Create Custom Dataset Swift Format](#02-create-custom-dataset-swift-format)
-  - [03 - Fine-tune](#03-fine-tune)
-  - [04 - Inference](#04-inference)
+- [Fine-tuning Report: Document Information Extraction](#fine-tuning-report-document-information-extraction)
+  - [01 - Dataset Preparation](#01---dataset-preparation)
+  - [02 - Create Custom Dataset Swift Format](#02---create-custom-dataset-swift-format)
+  - [03 - Fine-tune](#03---fine-tune)
+  - [04 - Inference](#04---inference)
 
 # Classify
-- For classify step , I do not use standalone base models. Instead, I will use a fine-tuned Large Language Model for document classification. This LLM processes OCR text and spatial data simultaneously to output accurate labels.
+
+- For the classification step, I do not use standalone base models. Instead, I use a fine-tuned Large Language Model for document classification.
+- This LLM processes OCR text and spatial data simultaneously to output accurate labels.
 
 # Fine-Tuning Report: Document Information Extraction
-- My notebook to fine-tune: [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx)
-  
-  
-*Model*: Qwen2-VL-2B-Instruc
+
+- My notebook for fine-tuning:
+  [NotebookColab](https://colab.research.google.com/drive/1a24_laFE-8eGvCojM0z3_UMh_O7SQx8k?authuser=3#scrollTo=tP3LSL97N2wx)
+
+*Model*: Qwen2-VL-2B-Instruct
 
 
 *Framework*: swift
