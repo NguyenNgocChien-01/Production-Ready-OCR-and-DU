@@ -252,7 +252,7 @@ infer_main(infer_argv)
 
 ```
 INPUT:
-
+```
 <<< extract data from <<image>> with format json 
 {   "document_type": "",
     "issuing_country": "", 
@@ -271,9 +271,9 @@ INPUT:
 }
 
 Input an image path or URL <<< /content/drive/MyDrive/INTERN-BIWOCO/sample-for-multi-modal-document-to-json-with-sagemaker-ai/data/swift_dataset/images/aus_passport_00010.png
-
+```
 OUTPUT:
-
+```
 {
     "document_type": "AUS_PASSPORT", 
     "issuing_country": "AUS",
@@ -290,7 +290,7 @@ OUTPUT:
     "mrz_line1": "P<AUSBALDWIN<<KIMBERLY<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
     "mrz_line2": "CJ1423646<AUS970507F290829<<<<<<<<<<<<<<<<01"
 }
-
+```
 --> There are some wrong with mrz.
 
 # 05 - Evalution
@@ -302,7 +302,7 @@ OUTPUT:
 
 
 Update later...
-
+<!-- 
 # ![driver-license](img/evalution/aus_driver_license_vic_00004.png)
 
 # | | Field | Ground Truth | Prediction |
@@ -319,7 +319,7 @@ Update later...
 # | ✓ | state | VIC | VIC |
 # | ✓ | document type | AUS_DRIVER_LICENSE | AUS_DRIVER_LICENSE |
 
-# **11/11 fields correct** 
+# **11/11 fields correct**  -->
 
 ---
 
