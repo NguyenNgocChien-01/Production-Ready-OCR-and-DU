@@ -250,6 +250,7 @@ infer_argv = [
 
 infer_main(infer_argv)
 
+```
 INPUT:
 
 <<< extract data from <<image>> with format json 
